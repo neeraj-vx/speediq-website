@@ -1,174 +1,118 @@
+import { ChannelStrip, CTA, FAQ, PageHero, SplitFeature, StatsStrip, Steps } from "@/components/site/blocks";
+import { Section, SectionHeader } from "@/components/site/primitives";
 import { pageMeta } from "@/lib/landing/seo";
-import Footer from "@/components/landing/Footer";
-import {
-  MarketingHero,
-  FeatureRows,
-  BarsCard,
-  StatusCard,
-  GaugeCard,
-  SectionLabel,
-  StatsBand,
-  FAQ,
-} from "@/components/landing/marketing";
 
 export const metadata = pageMeta(
-  "Product",
-  "One platform for WhatsApp, Email, SMS, Voice, social lead capture, a unified inbox, CRM, no-code automations, and reporting.",
+  "Product tour",
+  "A tour of SpeedIQ: the unified inbox and live chat, the AI assistant, WhatsApp and every other channel, the CRM, forms and booking, workflows and reporting.",
   "/product",
 );
 
-const channels = [
-  "WhatsApp",
-  "Email",
-  "SMS",
-  "Voice",
-  "Instagram",
-  "Facebook",
-  "Google Ads",
-  "Website chat",
-  "Webhooks",
-  "Forms",
-  "Booking",
-  "AI replies",
+const faq = [
+  { q: "Do I need separate tools for each channel?", a: "No. WhatsApp, Instagram, Facebook, website chat, email, SMS and voice run inside SpeedIQ, with messages and call history organised around one contact record." },
+  { q: "How do leads get into the workspace?", a: "From hosted or embedded forms, AI chat forms, booking pages, connected ad and social accounts, comments, project webhooks, Google Maps prospecting, CSV imports and inbound conversations." },
+  { q: "Can non-technical teammates build automations?", a: "Yes. Workflows are fully no-code: triggers, branching conditions, delays and actions, with a run history to check what happened." },
+  { q: "Can I send data into SpeedIQ from another system?", a: "Yes. Create a project webhook lead source and post lead data into the CRM. Forms, CSV imports, ad connections, prospecting, bookings and inbound messages are supported sources too." },
 ];
 
 export default function ProductPage() {
   return (
     <main>
-      <MarketingHero
-        active="Product"
-        eyebrow="PRODUCT"
+      <PageHero
+        eyebrow="Product tour"
         title="One platform for every"
         accent="customer message."
-        subtitle="Run WhatsApp, Instagram, Facebook, Email, SMS, and Voice from one workspace, with CRM, lead capture, booking, and AI-assisted follow-up around them."
-        secondaryCta={{ label: "Explore features", href: "/features" }}
-        highlights={[
-          "Inbox + CRM across channels",
-          "Lead capture & routing",
-          "AI replies with human hand-off",
-          "No per-seat fees",
-        ]}
+        lede="Run WhatsApp, Instagram, Facebook, website chat, email, SMS and voice from one workspace, with a CRM, lead capture, booking and an AI assistant around them."
+        secondary={{ label: "Browse all features", href: "/features" }}
+        compact
       />
 
-      <FeatureRows
-        rows={[
-          {
-            no: "01",
-            eyebrow: "UNIFIED INBOX",
-            title: "Every channel, one thread",
-            body: "WhatsApp, Email, SMS, and connected social conversations land in a shared inbox with assignment, internal notes, and unified contact history.",
-            mockup: (
-              <BarsCard
-                label="MESSAGES BY CHANNEL"
-                bars={[
-                  { name: "WhatsApp", pct: 62, color: "#217b4c" },
-                  { name: "Email", pct: 48, color: "#4a7bc9" },
-                  { name: "SMS", pct: 24, color: "#e5b32f" },
-                ]}
-              />
-            ),
-          },
-          {
-            no: "02",
-            eyebrow: "AUTOMATIONS",
-            title: "Capture and route every lead",
-            body: "Bring in leads from forms, ads, comments, webhooks, prospecting, bookings, and inbound messages, then assign them with routing rules.",
-            reverse: true,
-            mockup: (
-              <StatusCard
-                title="New lead"
-                sub="Form · assigned by rule"
-                tag="ROUTED"
-                progressLabel="Next action"
-                progressValue="AI follow-up"
-                pct={72}
-                primaryBtn="Open lead"
-              />
-            ),
-          },
-          {
-            no: "03",
-            eyebrow: "ANALYTICS",
-            title: "Automate replies and follow-up",
-            body: "Build trigger-based flows with branching logic, delays, messages, tasks, webhooks, and AI replies, with draft mode and human hand-off when needed.",
-            mockup: (
-              <GaugeCard
-                label="AI + WORKFLOW CONTROLS"
-                value="Guarded"
-                sub="Draft or auto-send"
-                footLeft="Caps · hours · fallback"
-                footRight="Configured"
-              />
-            ),
-          },
-        ]}
-      />
+      <Section size="sm">
+        <ChannelStrip title="Channels and lead sources" />
+      </Section>
 
-      {/* Integrations strip, unique to this page */}
-      <div className="w-full bg-white pb-28">
-        <div className="mx-auto w-full max-w-4xl px-6 text-center">
-          <div className="reveal flex justify-center">
-            <SectionLabel>Connected</SectionLabel>
-          </div>
-          <h2 className="reveal mx-auto mt-5 max-w-2xl font-display text-[30px] font-semibold leading-[1.12] tracking-tight text-[#11161f] sm:text-[36px]">
-            Channels and tools that
-            <br className="hidden sm:block" />
-            work together.
-          </h2>
-          <div className="reveal mt-9 flex flex-wrap justify-center gap-2.5">
-            {channels.map((c, i) => (
-              <span
-                key={c}
-                className="inline-flex items-center gap-2 rounded-full border border-[#e3e7f0] bg-white px-4 py-2 text-[13px] font-medium text-[#3b4150] shadow-sm"
-              >
-                <span
-                  className="h-2 w-2 rounded-full"
-                  style={{
-                    backgroundColor: ["#217b4c", "#4a7bc9", "#e5b32f", "#df622d"][
-                      i % 4
-                    ],
-                  }}
-                />
-            {c}
-              </span>
-            ))}
-          </div>
+      <Section size="sm">
+        <StatsStrip
+          stats={[
+            { value: "10", label: "Channels and lead sources" },
+            { value: "1", label: "Contact record per person" },
+            { value: "$0", label: "Per-seat fees" },
+            { value: "2", label: "Interface languages, EN and AR" },
+          ]}
+        />
+      </Section>
+
+      <Section>
+        <div className="space-y-20 sm:space-y-28">
+          <SplitFeature
+            eyebrow="01 · Inbox"
+            title="Every channel,"
+            accent="one thread."
+            body="WhatsApp, social DMs, website chat, email and SMS land in a shared inbox with assignment, internal notes, canned replies and the merged contact history beside every reply."
+            shot={{ src: "/product/inbox.png", alt: "The unified inbox", label: "Inbox" }}
+            cta={{ label: "Unified inbox & live chat", href: "/features/inbox" }}
+          />
+          <SplitFeature
+            reverse
+            eyebrow="02 · Capture"
+            title="Leads from everywhere,"
+            accent="routed automatically."
+            body="Forms, AI chat forms, booking pages, ad lead forms, comments, webhooks, prospecting scans and inbound messages all create leads in one CRM, then routing rules hand them to the right person."
+            shot={{ src: "/product/forms-builder.png", alt: "The form builder", label: "Forms" }}
+            cta={{ label: "Forms", href: "/features/forms" }}
+          />
+          <SplitFeature
+            eyebrow="03 · AI"
+            title="An assistant that answers,"
+            accent="books and hands off."
+            body="On website chat, WhatsApp and social DMs the AI replies from your knowledge base, captures details, books appointments and hands over to your team, with draft mode, office hours, caps and a full action log."
+            shot={{ src: "/product/ai-conversations.png", alt: "AI Conversations", label: "AI Conversations" }}
+            cta={{ label: "Workflows & AI", href: "/features/automations" }}
+          />
+          <SplitFeature
+            reverse
+            eyebrow="04 · CRM"
+            title="Pipelines, scoring"
+            accent="and the whole timeline."
+            body="Drag-and-drop pipelines, lead scoring from your rules, source attribution, tasks, custom fields and operations records, all on one contact."
+            shot={{ src: "/product/pipeline.png", alt: "Pipeline board", label: "Pipeline" }}
+            cta={{ label: "CRM & pipelines", href: "/features/crm" }}
+          />
+          <SplitFeature
+            eyebrow="05 · Campaigns"
+            title="Broadcasts and sequences"
+            accent="on every channel."
+            body="Send WhatsApp templates, emails and SMS to audiences, schedule them, and run timed sequences that stop when the person replies. Delivery states per recipient."
+            shot={{ src: "/product/campaigns.png", alt: "Campaigns", label: "Campaigns" }}
+            cta={{ label: "WhatsApp", href: "/features/whatsapp" }}
+          />
+          <SplitFeature
+            reverse
+            eyebrow="06 · Reporting"
+            title="The numbers,"
+            accent="in your currency."
+            body="Delivery and engagement by channel, pipeline and revenue over time, lead-source attribution and credit usage, displayed in the currency you work in."
+            shot={{ src: "/product/analytics.png", alt: "Analytics", label: "Analytics" }}
+            cta={{ label: "Analytics & reporting", href: "/features/analytics" }}
+          />
         </div>
-      </div>
+      </Section>
 
-      <StatsBand
-        stats={[
-          { value: "Multi", label: "Messaging + social channels" },
-          { value: "1", label: "Unified inbox and contact history" },
-          { value: "Auto", label: "Lead capture and routing" },
-          { value: "0", label: "Per-seat fees" },
-        ]}
-      />
+      <Section tone="surface">
+        <SectionHeader eyebrow="Getting started" title="Three steps to a working workspace." size="sm" />
+        <div className="mt-10">
+          <Steps
+            steps={[
+              { icon: "webhook", title: "Connect channels", body: "WhatsApp via embedded signup, Instagram and Facebook, your email domain, an SMS number and the chat widget." },
+              { icon: "upload", title: "Import or capture leads", body: "CSV import, forms, booking pages, ad accounts or a Maps scan. Everything lands in one CRM." },
+              { icon: "bolt", title: "Automate", body: "Routing, sequences and the AI assistant take the first reply and the follow-up off your plate." },
+            ]}
+          />
+        </div>
+      </Section>
 
-      <FAQ
-        title="How the platform works."
-        intro="The short version of how SpeedIQ fits into your stack."
-        items={[
-          {
-            q: "Do I need separate tools for each channel?",
-            a: "No. WhatsApp, Email, SMS, Voice, and connected social activity run inside SpeedIQ, with messages and call history organized around the same contact record.",
-          },
-          {
-            q: "How do leads get into the workspace?",
-            a: "Leads can come from hosted or embedded forms, connected ad and social accounts, comments, project-specific webhooks, prospecting, bookings, CSV imports, and inbound conversations.",
-          },
-          {
-            q: "Can non-technical teammates build automations?",
-            a: "Yes. Automations are fully no-code, trigger-based flows with branching logic, delays, and webhooks, no engineering tickets required.",
-          },
-          {
-            q: "Can I send data into SpeedIQ from another system?",
-            a: "Yes. Create a project-specific webhook lead source and send lead data into the CRM. Forms, CSV imports, ad connections, prospecting, bookings, and inbound messages are supported sources too.",
-          },
-        ]}
-      />
-
-      <Footer />
+      <FAQ items={faq} title="How the platform works." />
+      <CTA />
     </main>
   );
 }

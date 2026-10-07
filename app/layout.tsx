@@ -6,7 +6,8 @@ import localFont from "next/font/local";
 import { Analytics } from "@vercel/analytics/next";
 
 import { EmbedChat } from "@/components/landing/EmbedChat";
-import RevealObserver from "@/components/landing/RevealObserver";
+import Footer from "@/components/site/Footer";
+import Navbar from "@/components/site/Navbar";
 import { SITE_URL } from "@/lib/landing/site";
 
 import "./globals.css";
@@ -14,19 +15,19 @@ import "./globals.css";
 // Body type.
 const inter = Inter({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
   variable: "--font-inter",
 });
 
 // Fallback for the display font while Google Sans Flex loads.
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
   variable: "--font-sans",
 });
 
-// Display font — Google Sans Flex, self-hosted so it renders identically on
-// every OS. Variable weight axis 300..700; headings use it at weight 400.
+// Display font: Google Sans Flex, self-hosted so it renders identically on
+// every OS. Variable weight axis 300..700.
 const googleSansFlex = localFont({
   src: "./fonts/google-sans-flex.woff2",
   variable: "--font-google-sans-flex",
@@ -36,9 +37,9 @@ const googleSansFlex = localFont({
   fallback: ["Plus Jakarta Sans", "system-ui", "sans-serif"],
 });
 
-const TITLE = "SpeedIQ – WhatsApp & Email Marketing Platform";
+const TITLE = "SpeedIQ – One inbox for WhatsApp, social, email, SMS and calls";
 const DESCRIPTION =
-  "SpeedIQ puts WhatsApp, Instagram, Facebook, website chat, email, SMS and calls in one inbox, with a CRM and an AI agent built in.";
+  "SpeedIQ puts WhatsApp, Instagram, Facebook, website chat, email, SMS and calls in one inbox, with a CRM, booking, forms, campaigns and an AI assistant built in. No per-seat fees.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -49,15 +50,16 @@ export const metadata: Metadata = {
   description: DESCRIPTION,
   applicationName: "SpeedIQ",
   keywords: [
-    "WhatsApp marketing",
     "WhatsApp Business API",
-    "Email marketing",
+    "unified inbox",
+    "customer messaging platform",
+    "live chat widget",
+    "AI chat assistant",
+    "CRM for messaging",
+    "email marketing",
     "SMS marketing",
-    "Unified inbox",
-    "Customer messaging platform",
-    "WhatsApp broadcasts",
-    "Bulk SMS",
-    "Two-way SMS",
+    "booking pages",
+    "lead capture forms",
   ],
   authors: [{ name: "SpeedIQ" }],
   creator: "SpeedIQ",
@@ -80,13 +82,7 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-      "max-video-preview": -1,
-    },
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
   },
   alternates: { canonical: "/" },
 };
@@ -97,20 +93,14 @@ export const viewport: Viewport = {
   themeColor: "#ffffff",
 };
 
-/*
- * Everything renders inside the `.speediq-landing` scope: the marketing styling
- * (blue accent, Google Sans Flex / Inter type, gradients, reveal animations)
- * lives under that class in globals.css.
- */
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <html lang="en">
       <body className={`${inter.className} ${plusJakarta.variable} ${inter.variable} ${googleSansFlex.variable} min-h-screen antialiased`}>
-        <div className="speediq-landing min-h-screen">
-          {children}
-          <RevealObserver />
-          <EmbedChat />
-        </div>
+        <Navbar />
+        {children}
+        <Footer />
+        <EmbedChat />
         <Analytics />
       </body>
     </html>

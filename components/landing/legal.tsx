@@ -1,9 +1,9 @@
-/* Shared layout for the long-form legal pages. Reuses the site's dark
-   MarketingHero, then renders prose sections on white and a cross-link grid to
-   the other policies so every legal page is reachable from any other. */
+/* Shared layout for the long-form legal pages: a compact hero, numbered prose
+   sections, and a cross-link grid to the other policies. */
 
-import Footer from "@/components/landing/Footer";
-import { MarketingHero, SectionLabel } from "@/components/landing/marketing";
+import { PageHero } from "@/components/site/blocks";
+import { Icon } from "@/components/site/icons";
+import { Container, Eyebrow } from "@/components/site/primitives";
 
 export type LegalBlock =
   | { type: "p"; text: string }
@@ -28,20 +28,14 @@ function Blocks({ blocks }: { blocks: LegalBlock[] }) {
     <>
       {blocks.map((b, i) =>
         b.type === "p" ? (
-          <p
-            key={i}
-            className="mt-4 text-[14px] leading-[1.8] text-[#5a606c] first:mt-0"
-          >
+          <p key={i} className="mt-4 text-[15px] leading-[1.8] text-body first:mt-0">
             {b.text}
           </p>
         ) : (
           <ul key={i} className="mt-4 flex flex-col gap-2.5">
             {b.items.map((item) => (
-              <li
-                key={item}
-                className="flex items-start gap-3 text-[14px] leading-[1.7] text-[#5a606c]"
-              >
-                <span className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-[#c3c9d4]" />
+              <li key={item} className="flex items-start gap-3 text-[15px] leading-[1.7] text-body">
+                <span className="mt-[10px] h-1.5 w-1.5 shrink-0 rounded-full bg-line-strong" />
                 {item}
               </li>
             ))}
@@ -75,38 +69,21 @@ export function LegalLayout({
 
   return (
     <main>
-      <MarketingHero
-        eyebrow={eyebrow}
-        title={title}
-        accent={accent}
-        subtitle={subtitle}
-        hideVisual
-      />
+      <PageHero eyebrow={eyebrow} title={title} accent={accent} lede={subtitle} primary={null} compact />
 
-      <div className="w-full bg-white py-20">
-        <div className="mx-auto w-full max-w-3xl px-4 sm:px-6 lg:px-8">
-          <div className="reveal flex flex-col gap-1 border-b border-[#e6e9f1] pb-7">
-            <span className="text-[13px] font-medium text-[#8a8f9b]">
-              Last updated: {updated}
-            </span>
-            <p className="mt-3 text-[15px] leading-[1.8] text-[#5a606c]">
-              {intro}
-            </p>
+      <Container className="py-16">
+        <div className="mx-auto max-w-3xl">
+          <div className="border-b border-line pb-7">
+            <span className="text-[13px] font-medium text-muted">Last updated: {updated}</span>
+            <p className="mt-3 text-[15px] leading-[1.8] text-body">{intro}</p>
           </div>
 
-          <div className="mt-4 flex flex-col">
+          <div className="flex flex-col">
             {sections.map((s, i) => (
-              <section
-                key={s.heading}
-                className="reveal border-b border-[#e6e9f1] py-9 last:border-b-0"
-              >
+              <section key={s.heading} className="border-b border-line py-9 last:border-b-0">
                 <div className="flex items-baseline gap-4">
-                  <span className="font-display text-[14px] font-semibold text-[#c3c9d4]">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <h2 className="font-display text-[21px] font-semibold leading-[1.2] tracking-tight text-[#11161f]">
-                    {s.heading}
-                  </h2>
+                  <span className="font-display text-[14px] font-medium text-faint">{String(i + 1).padStart(2, "0")}</span>
+                  <h2 className="font-display text-[22px] font-medium leading-[1.2] text-ink">{s.heading}</h2>
                 </div>
                 <div className="mt-4 sm:pl-[30px]">
                   <Blocks blocks={s.blocks} />
@@ -114,33 +91,20 @@ export function LegalLayout({
               </section>
             ))}
           </div>
-        </div>
-      </div>
 
-      {/* Cross-links to the other policies */}
-      <div className="w-full bg-white pb-28">
-        <div className="mx-auto w-full max-w-3xl px-4 sm:px-6 lg:px-8">
-          <div className="reveal">
-            <SectionLabel>More policies</SectionLabel>
-          </div>
-          <div className="reveal mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
-            {others.map((p) => (
-              <a
-                key={p.href}
-                href={p.href}
-                className="group flex items-center justify-between rounded-md border border-[#e3e7f0] bg-white px-5 py-4 text-[14px] font-medium text-[#11161f] shadow-sm transition-colors hover:border-[#c3c9d4]"
-              >
-                {p.label}
-                <span className="text-[#9aa0ac] transition-transform group-hover:translate-x-0.5">
-                  ↗
-                </span>
-              </a>
-            ))}
+          <div className="mt-14">
+            <Eyebrow>More policies</Eyebrow>
+            <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
+              {others.map((p) => (
+                <a key={p.href} href={p.href} className="group flex items-center justify-between rounded-md border border-line bg-white px-5 py-4 text-[14.5px] font-medium text-ink transition-colors hover:border-line-strong hover:bg-surface">
+                  {p.label}
+                  <Icon name="arrow-up-right" className="h-4 w-4 text-faint transition-colors group-hover:text-ink" strokeWidth={2} />
+                </a>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-
-      <Footer />
+      </Container>
     </main>
   );
 }

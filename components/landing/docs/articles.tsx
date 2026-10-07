@@ -40,7 +40,7 @@ export const DOC_BODIES: Record<string, ReactNode> = {
         head={["Area", "What it does"]}
         rows={[
           ["Channels", "Connect WhatsApp, email, SMS, and voice, each with its own settings."],
-          ["Social", "Facebook & Instagram ad leads, comments, and DMs with AI auto-reply, plus Google Ads lead forms. LinkedIn and TikTok are coming soon."],
+          ["Social", "Facebook & Instagram ad leads, comments, and DMs with AI auto-reply, plus Google Ads lead forms."],
           ["Inbox", "A unified inbox that merges a contact’s conversations across every channel."],
           ["CRM", "Leads, pipelines, tags, custom fields, and a cross-channel activity timeline."],
           ["Campaigns", "Send broadcasts on any channel to an audience or a segment of leads."],
@@ -199,7 +199,6 @@ export const DOC_BODIES: Record<string, ReactNode> = {
           ["AI DM auto-reply", "✓", "✓", "—"],
         ]}
       />
-      <DocP>LinkedIn and TikTok are coming soon.</DocP>
 
       <DocH2 id="leads">Lead ads &amp; comments</DocH2>
       <DocList
@@ -682,7 +681,7 @@ export const DOC_BODIES: Record<string, ReactNode> = {
           ["Web forms", "Build a hosted form (Leads → Forms). Submissions create a lead."],
           [
             <>Social &amp; ad platforms</>,
-            <>Connect Facebook, Instagram &amp; Google in Leads → Capture; lead-ad forms flow in live. LinkedIn and TikTok are coming soon. See <DocLink href="/docs/social">Social</DocLink>.</>,
+            <>Connect Facebook, Instagram &amp; Google in Leads → Capture; lead-ad forms flow in live. See <DocLink href="/docs/social">Social</DocLink>.</>,
           ],
           ["Social comments", "Comments on your posts/ads become leads (keyword-filtered), on Facebook & Instagram."],
           ["Webhook / API sources", "Each source gives you a POST URL to send leads from anything."],

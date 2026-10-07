@@ -1,155 +1,61 @@
+import { CTA, FAQ, FeatureGrid, PageHero } from "@/components/site/blocks";
+import { Checklist, Section, SectionHeader } from "@/components/site/primitives";
 import { pageMeta } from "@/lib/landing/seo";
-import Footer from "@/components/landing/Footer";
-import {
-  MarketingHero,
-  HeroCampaigns,
-  Statement,
-  ValuesList,
-  StatsBand,
-  FAQ,
-  type Value,
-} from "@/components/landing/marketing";
 
 export const metadata = pageMeta(
-  "Why us",
-  "Why teams choose SpeedIQ, one unified inbox, transparent credit pricing with no per-seat fees, no-code automations, and built-in analytics.",
+  "Why SpeedIQ",
+  "Why teams choose SpeedIQ: one inbox for every channel, an AI assistant that books and hands off, a CRM underneath, fixed pricing with no per-seat fees.",
   "/why-us",
 );
 
-const values: Value[] = [
-  {
-    title: "No per-seat fees",
-    body: "Add teammates without a per-seat charge. You pay for the plan and usage, while each plan's member limit still applies.",
-    icon: CoinIcon,
-  },
-  {
-    title: "One inbox, not five",
-    body: "WhatsApp, Email, and SMS share a single thread, so your team stops switching tabs and losing context mid-conversation.",
-    icon: InboxIcon,
-  },
-  {
-    title: "Transparent credits",
-    body: "Every message type has a clear, published credit cost tracked in a full ledger, no surprise overages at the end of the month.",
-    icon: ReceiptIcon,
-  },
-  {
-    title: "No-code automation",
-    body: "Build trigger-based flows with branching logic yourself. No engineering tickets, no waiting on a sprint.",
-    icon: BoltIcon,
-  },
-  {
-    title: "A focused workspace",
-    body: "Connect channels, import contacts, and keep inbox, CRM, campaigns, and automations in one workspace.",
-    icon: RocketIcon,
-  },
+const values = [
+  { icon: "inbox", title: "One inbox, not five", body: "WhatsApp, social, website chat, email, SMS and calls share a single thread per customer, so your team stops switching tabs and losing context." },
+  { icon: "sparkle", title: "AI that does real work", body: "Not a chatbot bolted on: the assistant answers from your knowledge base, books appointments and hands off, with every action logged." },
+  { icon: "pipeline", title: "A CRM underneath, not beside", body: "Contacts, pipelines, scoring and tasks are the same records your inbox and automations act on. Nothing to sync." },
+  { icon: "wallet", title: "Pricing you can predict", body: "Fixed monthly plans with credit buckets for email, AI, SMS and voice. No per-seat fees, and every credit visible in a ledger." },
+  { icon: "bolt", title: "No-code automation", body: "Trigger-based workflows with branching, delays, sequences and routing that you build yourself. No engineering tickets." },
+  { icon: "shield", title: "Privacy by role", body: "The masked agent role hides phone numbers and emails from reps at the database level, so you can staff up without exposing customer data." },
+] as const;
+
+const faq = [
+  { q: "How is pricing actually different?", a: "You pay for the plan and usage, with no per-seat charges. Member counts follow the limit on the selected plan, and usage is visible in the credit ledger." },
+  { q: "Will I really save time consolidating?", a: "One inbox means less tab-switching and less piecing history together. Assignments, notes and channel context live in one place, and the AI takes the first reply." },
+  { q: "Do I need engineers to set it up?", a: "No. Connect your channels, import contacts, publish a form or booking page and build automations yourself." },
+  { q: "What if I outgrow my plan?", a: "Upgrade any time from Billing; an upgrade applies immediately with the prorated difference. A downgrade applies from the next cycle." },
 ];
 
 export default function WhyUsPage() {
   return (
     <main>
-      <MarketingHero
-        active="Why us"
-        eyebrow="WHY SPEEDIQ"
+      <PageHero
+        eyebrow="Why SpeedIQ"
         title="Built for teams who"
-        accent="value clarity."
-        subtitle="Most messaging tools bury you in channel sprawl and per-seat invoices. SpeedIQ does the opposite, one workspace, one ledger, no surprises."
-        secondaryCta={{ label: "Compare us", href: "/compare" }}
-        highlights={["No per-seat fees", "One transparent ledger", "Inbox + CRM together"]}
-        visual={<HeroCampaigns />}
+        accent="live in customer conversations."
+        lede="Most messaging tools bury you in channel sprawl and per-seat invoices. SpeedIQ does the opposite: one workspace, one record per customer, one predictable bill."
+        secondary={{ label: "Compare", href: "/compare" }}
+        compact
       />
 
-      <Statement label="The problem">
-        Teams stitch together{" "}
-        <span className="text-[#7a808b]">
-          one tool for WhatsApp, another for email, a third for SMS
-        </span>
-        , then pay per seat for each. We collapsed all of it into a single,
-        transparent workspace.
-      </Statement>
+      <Section>
+        <FeatureGrid items={[...values]} cols={3} />
+      </Section>
 
-      <ValuesList
-        label="What drives us"
-        title="Principles we"
-        accent="don't compromise on."
-        values={values}
-      />
+      <Section tone="surface">
+        <div className="grid gap-10 lg:grid-cols-12">
+          <div className="lg:col-span-5">
+            <SectionHeader eyebrow="What you get" title="The whole loop," accent="not a slice of it." size="sm" lede="Everything below is included on every plan, within its limits." />
+          </div>
+          <div className="lg:col-span-7">
+            <div className="grid gap-x-10 gap-y-3 sm:grid-cols-2">
+              <Checklist items={["Unified inbox with assignment and notes", "Website live chat widget", "AI assistant with booking and hand-off", "WhatsApp Business Platform", "Instagram, Facebook and Google Ads leads", "Email and SMS campaigns", "Voice and WhatsApp calling"]} />
+              <Checklist items={["CRM with pipelines, scoring and tasks", "Forms and AI chat forms", "Booking pages", "Google Maps prospecting", "Workflows, sequences and routing", "Analytics in your currency", "English and Arabic interface"]} />
+            </div>
+          </div>
+        </div>
+      </Section>
 
-      <StatsBand
-        stats={[
-          { value: "0", label: "Per-seat fees" },
-          { value: "Multi", label: "Channels unified" },
-          { value: "1", label: "Bill to manage" },
-          { value: "CRM", label: "Inbox, leads & pipeline together" },
-        ]}
-      />
-
-      <FAQ
-        label="Why us FAQ"
-        title="Fair questions to ask."
-        intro="The things teams usually want to confirm before switching."
-        items={[
-          {
-            q: "How is pricing actually different?",
-            a: "You pay for the plan and usage, with no per-seat charges. Member counts still follow the limit on the selected plan, and usage is visible in the ledger.",
-          },
-          {
-            q: "Will I really save time consolidating?",
-            a: "One inbox means less tab-switching and less piecing history together across tools. Your team can see assignments, notes, and channel context in one place.",
-          },
-          {
-            q: "Do I need engineers to set it up?",
-            a: "No. Connect your channels, import contacts, and build automations yourself, no-code and no sprint required.",
-          },
-          {
-            q: "What if I outgrow my plan?",
-            a: "Upgrade or downgrade anytime. Pricing has no per-seat charge, while plan limits and channel access vary by tier.",
-          },
-        ]}
-      />
-
-      <Footer />
+      <FAQ items={faq} title="Fair questions to ask." />
+      <CTA />
     </main>
-  );
-}
-
-/* ---------------- Icons ---------------- */
-
-function CoinIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" className={className}>
-      <circle cx="12" cy="12" r="8.5" stroke="currentColor" strokeWidth="1.6" />
-      <path d="M12 7v10M9.5 9.2c0-1 1.1-1.7 2.5-1.7s2.5.7 2.5 1.7-1.1 1.6-2.5 1.6-2.5.8-2.5 1.8 1.1 1.7 2.5 1.7 2.5-.7 2.5-1.7" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-    </svg>
-  );
-}
-function InboxIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" className={className}>
-      <path d="M4 13l2.5-7h11L20 13v5H4v-5Z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
-      <path d="M4 13h4l1.5 2h5L16 13h4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-function ReceiptIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" className={className}>
-      <path d="M6 3.5h12v17l-2-1.3-2 1.3-2-1.3-2 1.3-2-1.3-2 1.3v-17Z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
-      <path d="M9 8h6M9 11.5h6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-    </svg>
-  );
-}
-function BoltIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
-      <path d="M13 2.5 5.5 13H11l-1 8.5L18.5 11H13l1-8.5Z" />
-    </svg>
-  );
-}
-function RocketIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" className={className}>
-      <path d="M14 4c3 1 6 4 6 6-2 0-3 .5-4 1.5L11 16l-3-3 4.5-5C13.5 7 14 6 14 4Z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
-      <path d="M8 13l-2 2c-1 1-1 3-1 4 1 0 3 0 4-1l2-2M15 9.5h.01" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
   );
 }

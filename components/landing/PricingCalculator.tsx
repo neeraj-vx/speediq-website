@@ -37,7 +37,7 @@ export interface PricingTier extends PlanShape {
 }
 
 // NOTE: nothing inside this component may use the landing `.reveal` scroll
-// animation. RevealObserver adds `.in-view` imperatively; any state change that
+// animation (the old landing had one; keep className static): any state change that
 // alters an element's className makes React rewrite the attribute and drop that
 // class, snapping the element back to opacity 0 (cards vanished when the slider
 // crossed a tier boundary).
@@ -127,7 +127,7 @@ export default function PricingCalculator({
 
   return (
     <div className="w-full bg-white pb-8 pt-4">
-      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-site px-5 sm:px-8">
         {/* Model note + billing-cycle toggle */}
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <p className="max-w-md text-[13px] leading-6 text-[#5b616e]">

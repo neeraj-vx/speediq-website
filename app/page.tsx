@@ -1,266 +1,201 @@
-import Image from "next/image";
-import AnalyticsSections from "@/components/landing/AnalyticsSections";
-import ChannelsBand from "@/components/landing/ChannelsBand";
-import GrowthSections from "@/components/landing/GrowthSections";
-import CaseStudySections from "@/components/landing/CaseStudySections";
-import BottomSections from "@/components/landing/BottomSections";
-import Footer from "@/components/landing/Footer";
-import Navbar, { ArrowIcon } from "@/components/landing/Navbar";
+import { ChannelStrip, CTA, FAQ, FeatureGrid, PricingTeaser, SplitFeature, Steps } from "@/components/site/blocks";
+import { Icon, type IconName } from "@/components/site/icons";
+import { ProductShot } from "@/components/site/ProductShot";
+import { Button, Container, Eyebrow, Heading, Lede, Section, SectionHeader } from "@/components/site/primitives";
 import { SIGN_UP_URL } from "@/lib/landing/links";
-import {
-  WhatsAppIcon,
-  InstagramIcon,
-  FacebookIcon,
-  EmailIcon,
-  SmsIcon,
-} from "@/components/landing/brand-icons";
+
+/* Home: the long landing page. Product-first; every visual is a screenshot
+   of the app (components/site/ProductShot renders a placeholder until the
+   file exists in public/product). */
+
+const pillars: { icon: IconName; title: string; body: string; items: { label: string; href: string }[] }[] = [
+  {
+    icon: "target",
+    title: "Capture",
+    body: "Fill the pipeline from every source, without exports or copy-paste.",
+    items: [
+      { label: "Forms & AI chat forms", href: "/features/forms" },
+      { label: "Booking pages", href: "/features/booking" },
+      { label: "Instagram, Facebook & Google Ads leads", href: "/features/social" },
+      { label: "Google Maps prospecting", href: "/features/prospecting" },
+      { label: "Webhooks & CSV import", href: "/features" },
+    ],
+  },
+  {
+    icon: "inbox",
+    title: "Converse",
+    body: "Answer every channel from one inbox, with the AI handling the first reply.",
+    items: [
+      { label: "Unified inbox & live chat", href: "/features/inbox" },
+      { label: "WhatsApp Business", href: "/features/whatsapp" },
+      { label: "Email & SMS", href: "/features/email" },
+      { label: "Voice & WhatsApp calling", href: "/features/voice" },
+      { label: "AI assistant with hand-off", href: "/features/automations" },
+    ],
+  },
+  {
+    icon: "pipeline",
+    title: "Convert",
+    body: "Work every deal, automate the follow-up and see what is working.",
+    items: [
+      { label: "CRM & pipelines", href: "/features/crm" },
+      { label: "Workflows & sequences", href: "/features/automations" },
+      { label: "Lead routing", href: "/features/automations" },
+      { label: "Campaigns & templates", href: "/features" },
+      { label: "Analytics & reporting", href: "/features/analytics" },
+    ],
+  },
+];
+
+const steps = [
+  { icon: "webhook", title: "Connect your channels", body: "WhatsApp through Meta's embedded signup, Instagram and Facebook, your email domain, an SMS number, and the chat widget on your site." },
+  { icon: "upload", title: "Bring in your leads", body: "Import a CSV, publish a form or booking page, sync your ad accounts, or scan the map. Every lead lands in one CRM." },
+  { icon: "bolt", title: "Automate the follow-up", body: "Route new leads, let the AI answer first, run sequences, and watch delivery and revenue in one place." },
+] as const;
+
+const teamItems = [
+  { icon: "users", title: "No per-seat fees", body: "Invite the whole team within your plan's member limit. You pay for the plan and credits, not heads." },
+  { icon: "eye-off", title: "Masked agent role", body: "Reps work leads while phone numbers and emails stay hidden, enforced at the database level." },
+  { icon: "layers", title: "Projects as workspaces", body: "Separate brands or clients, each with its own channels, team, settings and billing." },
+  { icon: "language", title: "English & Arabic", body: "A full right-to-left interface for Arabic-speaking teams, switchable per user." },
+] satisfies { icon: IconName; title: string; body: string }[];
+
+const faq = [
+  { q: "Which channels does SpeedIQ support?", a: "WhatsApp (official Business Platform), Instagram and Facebook DMs, comments and lead ads, Google Ads lead forms, website live chat, email, SMS and voice calls, including WhatsApp calling." },
+  { q: "What does the AI assistant actually do?", a: "It answers visitors and customers from your knowledge base and instructions on website chat, WhatsApp and social DMs, captures their details, books appointments against your real availability, and hands the conversation to your team when needed. Every action is logged." },
+  { q: "Do I pay per user?", a: "No. Plans have a fixed monthly price with a member limit, and no per-seat charges. Usage is covered by credit buckets for email, AI, SMS and voice. WhatsApp and social DMs do not use credits." },
+  { q: "Can I replace my CRM with SpeedIQ?", a: "For most messaging-led teams, yes. Contacts, pipelines, lead scoring, tasks, custom fields, routing and a cross-channel timeline are built in, and webhooks and CSV import bring data from anywhere else." },
+  { q: "How long does setup take?", a: "Connecting a channel takes minutes. WhatsApp uses Meta's embedded signup, email needs a DNS record for your domain, and the chat widget is one script tag." },
+];
 
 export default function Home() {
   return (
     <main>
-      <section className="relative w-full overflow-hidden">
-        <div className="relative mx-auto w-full max-w-7xl px-6">
-          <Navbar variant="light" />
-
-          {/* Hero */}
-          <div className="relative z-10 pt-10 text-left sm:pt-16 lg:pt-24">
-            {/* Row 1: headline + subtitle */}
-            <div className="grid gap-8 lg:grid-cols-[1.55fr_1fr] lg:items-start lg:gap-12">
-              <h1
-                className="reveal font-display text-[40px] leading-[1.02] tracking-[-0.035em] text-[#0d1220] min-[400px]:text-[44px] sm:text-[64px] lg:text-[78px]"
-                style={{ transitionDelay: "0.04s", fontWeight: 300 }}
-              >
-                Turn every chat into
-                <br />
-                a{" "}
-                <span className="relative whitespace-nowrap text-[#0526D9]">
-                  happy customer
-                  <svg
-                    className="absolute -bottom-1 left-0 h-[0.28em] w-full text-[#0526D9]/35"
-                    viewBox="0 0 300 12"
-                    fill="none"
-                    preserveAspectRatio="none"
-                    aria-hidden
-                  >
-                    <path
-                      d="M2 8.5C60 3.5 140 2.5 298 6.5"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </span>
-              </h1>
-
-              <p
-                className="reveal text-[20px] leading-[1.55] text-[#565d6b] lg:pt-3 lg:text-[23px]"
-                style={{ transitionDelay: "0.14s" }}
-              >
-                WhatsApp, Instagram, Facebook, email, SMS and voice, all in one
-                inbox, with CRM, booking and AI-assisted follow-up.
-              </p>
+      {/* Hero */}
+      <section className="hero-glow">
+        <Container className="pt-14 sm:pt-20">
+          <div className="mx-auto max-w-3xl text-center">
+            <Eyebrow className="rise rise-1">Customer messaging platform</Eyebrow>
+            <Heading as="h1" size="xl" className="rise rise-2 mt-5">
+              Every customer conversation, <span className="text-accent">one inbox.</span>
+            </Heading>
+            <Lede className="rise rise-3 mx-auto mt-6 max-w-2xl">
+              WhatsApp, Instagram, Facebook, website chat, email, SMS and calls land in one place. A CRM, booking, forms,
+              campaigns and an AI assistant sit around it, so leads get answered, qualified and followed up without the
+              tab-switching.
+            </Lede>
+            <div className="rise rise-4 mt-8 flex flex-wrap justify-center gap-3">
+              <Button href={SIGN_UP_URL} size="lg" arrow>
+                Get started free
+              </Button>
+              <Button href="/product" variant="secondary" size="lg">
+                See how it works
+              </Button>
             </div>
-
-            {/* Row 2: buttons (left) + channel icons (far right) */}
-            <div
-              className="reveal mt-8 flex flex-col gap-7 sm:mt-12 sm:flex-row sm:items-center sm:justify-between lg:mt-14"
-              style={{ transitionDelay: "0.22s" }}
-            >
-              <div className="flex flex-wrap items-center gap-3">
-                <a
-                  href={SIGN_UP_URL}
-                  className="group inline-flex items-center gap-2.5 rounded-full bg-[#0526D9] py-3.5 pl-7 pr-3.5 text-[15px] font-medium text-white transition-transform hover:scale-[1.03]"
-                >
-                  Get started free
-                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-[#0526D9] transition-transform group-hover:rotate-45">
-                    <ArrowIcon className="h-3.5 w-3.5" />
-                  </span>
-                </a>
-                <a
-                  href="#how-it-works"
-                  className="inline-flex items-center gap-2 rounded-full bg-[#eef1f6] px-6 py-3.5 text-[15px] font-medium text-[#11161f] transition-colors hover:bg-[#e4e8f0]"
-                >
-                  See how it works
-                </a>
-              </div>
-
-              {/* Minimal channel icons */}
-              <div className="flex items-center gap-4 text-[#9aa0ab]">
-                <WhatsAppIcon className="h-[19px] w-[19px] opacity-90 transition-opacity hover:opacity-100" />
-                <InstagramIcon className="h-[19px] w-[19px] transition-colors hover:text-[#11161f]" />
-                <FacebookIcon className="h-[19px] w-[19px] transition-colors hover:text-[#11161f]" />
-                <EmailIcon className="h-[19px] w-[19px] transition-colors hover:text-[#11161f]" />
-                <SmsIcon className="h-[19px] w-[19px] transition-colors hover:text-[#11161f]" />
-              </div>
-            </div>
+            <p className="rise rise-4 mt-4 text-[13px] text-muted">No per-seat fees · Official WhatsApp Business API · English & Arabic</p>
           </div>
-
-          {/* Card row - clear gap below the CTAs */}
-          <div className="reveal relative z-20 mt-8 pb-16 sm:mt-10 sm:pb-24 lg:mt-12 lg:pb-32">
-            <div className="grid grid-cols-2 items-stretch gap-4 sm:gap-5 lg:grid-cols-4">
-              {/* A - accent statement card (tall) */}
-              <div className="relative flex min-h-[200px] flex-col justify-between gap-4 overflow-hidden rounded-[28px] bg-[#0526D9] p-5 text-white sm:min-h-[240px] sm:p-6 lg:min-h-[380px]">
-                <span className="inline-flex w-fit items-center gap-1.5 whitespace-nowrap rounded-full bg-white/15 px-2.5 py-1.5 text-[11px] font-medium text-white backdrop-blur-sm sm:px-3 sm:text-[12px]">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#7CFFB0]" />
-                  One shared inbox
-                </span>
-                <p className="text-[17px] font-light leading-snug sm:text-[21px] lg:text-[24px]">
-                  Every message and every channel, handled in one calm place.
-                </p>
-              </div>
-
-              {/* Stacked stats (bento column) */}
-              <div className="flex flex-col gap-4 sm:gap-5">
-                {/* B - shared context */}
-                <div className="flex min-h-[128px] flex-1 flex-col justify-between rounded-[28px] sm:min-h-[150px] bg-[#e4e7ee] p-5">
-                  <span className="flex h-9 w-9 items-center justify-center self-start rounded-full bg-white text-[#5b6270]">
-                    <TrendIcon className="h-[17px] w-[17px]" />
-                  </span>
-                  <div>
-                    <div className="font-display text-[38px] font-semibold leading-none text-[#11161f]">
-                      CRM + inbox
-                    </div>
-                    <p className="mt-1.5 text-[13px] leading-snug text-[#7a808b]">
-                      shared context for every conversation
-                    </p>
-                  </div>
-                </div>
-
-                {/* D - current status */}
-                <div className="flex min-h-[128px] flex-1 flex-col justify-between rounded-[28px] sm:min-h-[150px] bg-[#d7e1ff] p-5">
-                  <span className="flex h-9 w-9 items-center justify-center self-start rounded-full bg-white text-[#0526D9]">
-                    <CheckBadgeIcon className="h-[17px] w-[17px]" />
-                  </span>
-                  <div>
-                    <div className="font-display text-[36px] font-semibold leading-none text-[#0526D9]">
-                      Current
-                    </div>
-                    <p className="mt-1.5 text-[13px] leading-snug text-[#5b6270]">
-                      delivery, replies and credit usage
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* C - photo (medium) with review overlay */}
-              <div className="relative min-h-[240px] overflow-hidden rounded-[28px] bg-[#e8eaf0] lg:min-h-[380px]">
-                <Image
-                  src="/landing/hero-scenic-old.jpg"
-                  alt="Calm, effortless customer conversations"
-                  fill
-                  sizes="(max-width: 1024px) 45vw, 20vw"
-                  className="object-cover object-center"
-                />
-                <div className="absolute inset-x-3 bottom-3 rounded-2xl bg-white p-3.5 shadow-[0_8px_24px_-12px_rgba(16,24,40,0.4)]">
-                  <div className="flex items-center gap-0.5 text-[#f5a623]">
-                    {[0, 1, 2, 3, 4].map((i) => (
-                      <StarIcon key={i} className="h-3.5 w-3.5" />
-                    ))}
-                  </div>
-                    <p className="mt-2 text-[13px] font-semibold leading-snug text-[#11161f]">
-                    Cross-channel context, in one profile.
-                  </p>
-                  <div className="mt-1.5 flex items-center gap-1.5 text-[11px] text-[#8a8f9b]">
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#0526D9]" />
-                    Unified contact history
-                  </div>
-                </div>
-              </div>
-
-              {/* E - photo (tall) with merged UI chips */}
-              <div className="relative min-h-[240px] overflow-hidden rounded-[28px] bg-[#e8eaf0] lg:min-h-[380px]">
-                <Image
-                  src="/landing/hero-phone.jpg"
-                  alt="A business owner staying on top of every customer message with SpeedIQ"
-                  fill
-                  priority
-                  sizes="(max-width: 1024px) 90vw, 20vw"
-                  className="object-cover object-[62%_center]"
-                />
-                <span className="absolute right-3 top-3 rounded-full bg-white/90 px-3 py-1.5 text-[11px] font-semibold text-[#0526D9] shadow-[0_8px_24px_-12px_rgba(16,24,40,0.5)] backdrop-blur-sm">
-                  AI draft ready
-                </span>
-                <div className="absolute inset-x-3 bottom-3 flex items-center gap-2 rounded-2xl bg-white p-2 pr-3 shadow-[0_8px_24px_-12px_rgba(16,24,40,0.4)]">
-                  <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#eafaf0]">
-                    <WhatsAppIcon className="h-4 w-4" />
-                  </span>
-                  <span className="text-[11.5px] font-medium text-[#11161f]">
-                    New message · shared inbox
-                  </span>
-                  <DoubleCheckIcon className="ml-auto h-4 w-4 text-[#217b4c]" />
-                </div>
-              </div>
-            </div>
+          <div className="rise rise-4 mt-12 sm:mt-16">
+            <ProductShot shot={{ src: "/product/inbox.png", alt: "The SpeedIQ inbox with WhatsApp, Instagram, email and website chat conversations in one list", label: "Inbox" }} priority />
           </div>
-        </div>
+        </Container>
       </section>
 
-      <div className="space-y-20 pb-24 md:space-y-28 md:pb-28 lg:space-y-32 lg:pb-36">
-        <ChannelsBand />
-        <AnalyticsSections />
-        <GrowthSections />
-        <CaseStudySections />
-        <BottomSections />
-      </div>
-      <Footer />
+      <Section size="sm">
+        <ChannelStrip />
+      </Section>
+
+      {/* Capture / Converse / Convert */}
+      <Section>
+        <SectionHeader
+          eyebrow="One platform"
+          title="Capture, converse and convert"
+          accent="from a single workspace."
+          lede="Point tools give you a WhatsApp app, an email tool, a helpdesk and a CRM that barely talk to each other. SpeedIQ is the whole loop, with one contact record underneath."
+        />
+        <div className="mt-12 grid gap-4 lg:grid-cols-3">
+          {pillars.map((p) => (
+            <div key={p.title} className="rounded-lg border border-line bg-white p-7">
+              <span className="flex h-10 w-10 items-center justify-center rounded-md bg-ink text-white">
+                <Icon name={p.icon} className="h-5 w-5" />
+              </span>
+              <h3 className="mt-5 text-[22px] font-medium text-ink">{p.title}</h3>
+              <p className="mt-2 text-[15px] leading-[1.6] text-body">{p.body}</p>
+              <ul className="mt-6 divide-y divide-line border-t border-line">
+                {p.items.map((it) => (
+                  <li key={it.label}>
+                    <a href={it.href} className="group flex items-center justify-between py-3 text-[14.5px] font-medium text-ink">
+                      {it.label}
+                      <Icon name="arrow" className="h-4 w-4 text-faint transition-transform group-hover:translate-x-0.5 group-hover:text-ink" strokeWidth={2} />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* Deep dives */}
+      <Section tone="surface">
+        <div className="space-y-20 sm:space-y-28">
+          <SplitFeature
+            eyebrow="Unified inbox & live chat"
+            title="One thread per customer,"
+            accent="whatever channel they pick."
+            body="Messages from every channel the same person uses collapse into one timeline, with assignment, private notes and canned replies. Add the live chat widget to your site with one script tag and visitors land in the same queue."
+            bullets={["Assign, note and resolve without leaving the thread", "Branded chat widget with starters, office hours and a help tab", "Calls, bookings and form submissions on the same timeline"]}
+            shot={{ src: "/product/live-chat.png", alt: "Live chat widget set-up with the branded widget preview", label: "Live chat" }}
+            cta={{ label: "Explore the inbox", href: "/features/inbox" }}
+          />
+          <SplitFeature
+            reverse
+            eyebrow="AI assistant"
+            title="The first reply,"
+            accent="handled."
+            body="Give the assistant a personality and your knowledge base. On website chat, WhatsApp and social DMs it greets people by name, answers questions, captures details, books an open slot in one step and hands off to your team when a human should take over."
+            bullets={["Draft-for-review or auto-send, with office hours, caps and rate limits", "Books appointments against your real availability", "Every AI action logged under AI Conversations"]}
+            shot={{ src: "/product/ai-conversations.png", alt: "AI Conversations showing assistant replies and the action log", label: "AI Conversations" }}
+            cta={{ label: "See workflows & AI", href: "/features/automations" }}
+          />
+          <SplitFeature
+            eyebrow="CRM & pipelines"
+            title="A CRM that fills itself"
+            accent="from the conversations."
+            body="Leads are created from chats, forms, bookings, ads and the map, then move through drag-and-drop pipelines with scoring, source attribution, tasks and custom fields. One record per person, every channel merged."
+            bullets={["As many pipelines and stages as you sell with", "Lead scoring from rules you set", "Tasks, notes and operations records on the lead"]}
+            shot={{ src: "/product/pipeline.png", alt: "A pipeline board with leads in stages", label: "Pipeline" }}
+            cta={{ label: "Explore the CRM", href: "/features/crm" }}
+          />
+          <SplitFeature
+            reverse
+            eyebrow="Workflows"
+            title="Follow-up that runs"
+            accent="while you sleep."
+            body="A visual, no-code builder: trigger on a new lead, a message, a stage change or a booking, branch on any field, then assign, tag, message, create a task, call a webhook or run AI. Sequences space the follow-up out and stop when the person replies."
+            bullets={["Round-robin, weighted or fixed lead routing", "Multi-step sequences on email, SMS or WhatsApp", "Run history that shows what fired and why"]}
+            shot={{ src: "/product/workflow.png", alt: "The visual workflow builder", label: "Workflow builder" }}
+            cta={{ label: "See the builder", href: "/features/automations" }}
+          />
+        </div>
+      </Section>
+
+      {/* How it works */}
+      <Section>
+        <SectionHeader eyebrow="How it works" title="Up and running" accent="in an afternoon." lede="No engineers needed. Connect, import, automate." />
+        <div className="mt-12">
+          <Steps steps={[...steps]} />
+        </div>
+      </Section>
+
+      {/* Team */}
+      <Section tone="surface">
+        <SectionHeader eyebrow="Built for teams" title="Add everyone." accent="Keep control." lede="Roles, privacy and workspaces that let a growing team work from one place without exposing customer data or paying by the head." />
+        <FeatureGrid items={teamItems} cols={4} className="mt-12" />
+      </Section>
+
+      <PricingTeaser />
+      <FAQ items={faq} />
+      <CTA />
     </main>
-  );
-}
-
-/* ---------- Hero helpers ---------- */
-
-function StarIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
-      <path d="M12 2.5l2.9 5.9 6.5.95-4.7 4.58 1.11 6.47L12 17.4l-5.81 3.05 1.11-6.47L2.6 9.35l6.5-.95L12 2.5Z" />
-    </svg>
-  );
-}
-
-function TrendIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" className={className}>
-      <path
-        d="M4 15l5-5 4 4 7-8M16 6h4v4"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function CheckBadgeIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" className={className}>
-      <path
-        d="M12 2.5l2.3 1.7 2.8-.2 1 2.6 2.3 1.6-.7 2.8.7 2.8-2.3 1.6-1 2.6-2.8-.2L12 21.5l-2.3-1.7-2.8.2-1-2.6-2.3-1.6.7-2.8-.7-2.8 2.3-1.6 1-2.6 2.8.2L12 2.5Z"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M8.8 12l2.2 2.2 4.2-4.4"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function DoubleCheckIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" className={className}>
-      <path
-        d="M2 12.5l3.5 3.5L14 7M11 15l1 1 8.5-9"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
   );
 }

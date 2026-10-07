@@ -1,7 +1,5 @@
 import { pageMeta } from "@/lib/landing/seo";
-import Footer from "@/components/landing/Footer";
-import Navbar from "@/components/landing/Navbar";
-import { SectionLabel } from "@/components/landing/marketing";
+import { Eyebrow } from "@/components/site/primitives";
 import PricingCalculator, { type CreditTypeOption } from "@/components/landing/PricingCalculator";
 import { formatMoney } from "@/lib/pricing/config";
 import { countryName } from "@/lib/pricing/country-credits";
@@ -73,15 +71,14 @@ export default function PricingPage() {
 
   return (
     <main>
-      {/* Top bar + intro (replaces the old hero) */}
-      <div className="w-full bg-white">
-        <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-          <Navbar active="Pricing" variant="light" />
-          <div className="max-w-2xl pb-2 pt-12 sm:pt-16">
-            <h1 className="reveal font-display text-[36px] font-semibold leading-[1.06] tracking-tight text-[#11161f] sm:text-[46px]">
+      <div className="hero-glow w-full">
+        <div className="mx-auto w-full max-w-site px-5 sm:px-8">
+          <div className="max-w-2xl pb-2 pt-14 sm:pt-20">
+            <Eyebrow className="mb-4">Pricing</Eyebrow>
+            <h1 className="font-display text-[38px] font-medium leading-[1.06] tracking-[-0.025em] text-ink sm:text-[52px]">
               A plan that&apos;s perfect for you.
             </h1>
-            <p className="reveal mt-4 max-w-xl text-[15px] leading-7 text-[#7a808b]">
+            <p className="mt-5 max-w-xl text-[17px] leading-[1.6] text-body">
               A fixed monthly plan unlocks your channels and features and includes a pool of credits —
               no lock-in, cancel anytime, and no per-seat charges; plan member limits apply. All prices
               are in US dollars.
@@ -95,10 +92,10 @@ export default function PricingPage() {
 
       {/* Credit costs */}
       <div className="w-full bg-white pb-28">
-        <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto w-full max-w-site px-5 sm:px-8">
           <div className="flex w-full flex-col overflow-hidden rounded-md border border-[#d4d9e4] bg-white shadow-sm">
-            <div className="reveal border-b border-[#d4d9e4] px-6 py-12 sm:px-8 lg:p-14">
-              <SectionLabel>How credits work</SectionLabel>
+            <div className="border-b border-[#d4d9e4] px-6 py-12 sm:px-8 lg:p-14">
+              <Eyebrow>How credits work</Eyebrow>
               <h2 className="mt-5 max-w-xl font-display text-[32px] font-semibold leading-[1.1] tracking-tight text-[#11161f] sm:text-[36px]">
                 One bucket per channel.
               </h2>
@@ -111,7 +108,7 @@ export default function PricingPage() {
             </div>
 
             {/* Per-country SMS/Voice consumption */}
-            <div className="reveal px-6 py-10 sm:px-8 lg:p-12">
+            <div className="px-6 py-10 sm:px-8 lg:p-12">
               <div className="overflow-x-auto">
                 <table className="w-full min-w-[440px] border-collapse text-left">
                   <thead>
@@ -157,7 +154,7 @@ export default function PricingPage() {
 
             {/* Flat-rate channels (Email, AI) + non-credit social note */}
             <div className="grid grid-cols-1 border-t border-[#d4d9e4] sm:grid-cols-3">
-              <div className="reveal px-6 py-8 sm:px-8 lg:p-12">
+              <div className="px-6 py-8 sm:px-8 lg:p-12">
                 <div className="text-[13px] text-[#7a808b]">Email</div>
                 <div className="mt-1 font-display text-[24px] font-semibold tracking-tight text-[#11161f]">
                   {emailCredits} credit{emailCredits === 1 ? "" : "s"}
@@ -166,7 +163,7 @@ export default function PricingPage() {
                   One email credit per email sent, to any inbox worldwide.
                 </p>
               </div>
-              <div className="reveal border-t border-[#d4d9e4] px-6 py-8 sm:border-l sm:border-t-0 sm:px-8 lg:p-12">
+              <div className="border-t border-[#d4d9e4] px-6 py-8 sm:border-l sm:border-t-0 sm:px-8 lg:p-12">
                 <div className="text-[13px] text-[#7a808b]">AI</div>
                 <div className="mt-1 font-display text-[24px] font-semibold tracking-tight text-[#11161f]">
                   {aiCredits} credit{aiCredits === 1 ? "" : "s"}
@@ -176,7 +173,7 @@ export default function PricingPage() {
                   assist. Prospecting &amp; deep research cost 1 AI credit per verified lead.
                 </p>
               </div>
-              <div className="reveal border-t border-[#d4d9e4] px-6 py-8 sm:border-l sm:border-t-0 sm:px-8 lg:p-12">
+              <div className="border-t border-[#d4d9e4] px-6 py-8 sm:border-l sm:border-t-0 sm:px-8 lg:p-12">
                 <div className="text-[13px] text-[#7a808b]">WhatsApp &amp; social DMs</div>
                 <div className="mt-1 font-display text-[24px] font-semibold tracking-tight text-[#11161f]">
                   0 credits
@@ -194,15 +191,15 @@ export default function PricingPage() {
       {/* FAQ */}
       <div className="w-full bg-white pb-28">
         <div className="mx-auto w-full max-w-4xl px-6">
-          <div className="reveal">
-            <SectionLabel>FAQ</SectionLabel>
+          <div className="">
+            <Eyebrow>FAQ</Eyebrow>
             <h2 className="mt-5 font-display text-[32px] font-semibold leading-[1.1] tracking-tight text-[#11161f] sm:text-[36px]">
               Questions, answered.
             </h2>
           </div>
           <div className="mt-8">
             {faqs.map((f) => (
-              <div key={f.q} className="reveal border-t border-[#e6e9f1] py-7">
+              <div key={f.q} className="border-t border-[#e6e9f1] py-7">
                 <h3 className="text-[16px] font-semibold text-[#11161f]">{f.q}</h3>
                 <p className="mt-2 max-w-2xl text-[14px] leading-[1.7] text-[#7a808b]">{f.a}</p>
               </div>
@@ -211,7 +208,6 @@ export default function PricingPage() {
         </div>
       </div>
 
-      <Footer />
     </main>
   );
 }

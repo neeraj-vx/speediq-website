@@ -2,177 +2,137 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─────────────────────────────────────────────────────────────────────────
+   SpeedIQ marketing site — design tokens
+   Light, product-first. Brand blue used as the single accent; everything
+   else is ink, body grey and hairlines. Display type is Google Sans Flex,
+   body is Inter (both loaded in app/layout.tsx).
+   ───────────────────────────────────────────────────────────────────────── */
+:root {
+  --ink: #0b0f19;
+  --body: #4b5367;
+  --muted: #7b8294;
+  --faint: #a3a9b8;
+  --line: #e6e8ee;
+  --line-strong: #d6d9e2;
+  --surface: #f6f7fa;
+  --surface-2: #eef0f5;
+  --accent: #0526d9;
+  --accent-ink: #0a1c9e;
+  --accent-soft: #eef1ff;
+  --accent-soft-2: #dfe5ff;
+  --ok: #16a34a;
+  --radius-sm: 10px;
+  --radius: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --shadow-shot: 0 1px 2px rgba(11, 15, 25, 0.06), 0 24px 60px -24px rgba(11, 15, 25, 0.25);
+}
+
 @layer base {
   * {
-    @apply border-gray-200;
+    border-color: var(--line);
+  }
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
   }
   body {
-    @apply bg-white text-gray-800;
+    background: #ffffff;
+    color: var(--ink);
+    font-family: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-feature-settings: "cv11", "ss01";
+  }
+  ::selection {
+    background: var(--accent-soft-2);
+    color: var(--accent-ink);
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-google-sans-flex), "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    color: var(--ink);
   }
 }
 
-/* ════════════════════════════════════════════════════════════════════════
- * SpeedIQ marketing site styles.
- * Everything is scoped under .speediq-landing (the root layout wraps the whole
- * site in it). The design was authored in Tailwind v4; this block re-creates the
- * few v4-only bits the components rely on (lime accent, font-display/font-sans,
- * rounded-xs) on top of Tailwind v3.
- * ════════════════════════════════════════════════════════════════════════ */
-.speediq-landing {
-  --lime: #0526D9;
-  --lime-bright: #3b82f6;
-  min-height: 100%;
-  background: #ffffff;
-  color: #0a0e14;
-  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+@layer components {
+  .font-display {
+    font-family: var(--font-google-sans-flex), "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+  /* Soft blue halo behind the hero product shot. */
+  .hero-glow {
+    background:
+      radial-gradient(60% 50% at 50% 0%, rgba(5, 38, 217, 0.10) 0%, rgba(5, 38, 217, 0) 70%),
+      linear-gradient(180deg, #ffffff 0%, #f6f7fa 100%);
+  }
+  /* Dotted grid used behind a few sections. */
+  .dot-grid {
+    background-image: radial-gradient(rgba(11, 15, 25, 0.08) 1px, transparent 1px);
+    background-size: 22px 22px;
+    -webkit-mask-image: radial-gradient(70% 70% at 50% 40%, #000 30%, transparent 100%);
+    mask-image: radial-gradient(70% 70% at 50% 40%, #000 30%, transparent 100%);
+  }
+  /* Thin hairline between stacked sections. */
+  .hairline {
+    border-top: 1px solid var(--line);
+  }
+  /* Entrance for the hero only. Content is visible without JS and the
+     animation is purely additive. */
+  .rise {
+    animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .rise-1 { animation-delay: 0.05s; }
+  .rise-2 { animation-delay: 0.14s; }
+  .rise-3 { animation-delay: 0.23s; }
+  .rise-4 { animation-delay: 0.34s; }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: none; }
+  }
+  /* Range input used by the pricing estimator. */
+  .sl-range {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 9999px;
+    background: var(--line);
+    outline: none;
+    cursor: pointer;
+  }
+  .sl-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 22px;
+    width: 22px;
+    border-radius: 9999px;
+    background: #ffffff;
+    border: 1px solid var(--line-strong);
+    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.12), 0 4px 10px -2px rgba(16, 24, 40, 0.22);
+    cursor: pointer;
+  }
+  .sl-range::-moz-range-thumb {
+    height: 22px;
+    width: 22px;
+    border-radius: 9999px;
+    background: #ffffff;
+    border: 1px solid var(--line-strong);
+    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.12), 0 4px 10px -2px rgba(16, 24, 40, 0.22);
+    cursor: pointer;
+  }
+  /* Native <details> FAQ: rotate the chevron when open. */
+  details.faq > summary { list-style: none; }
+  details.faq > summary::-webkit-details-marker { display: none; }
+  details.faq[open] .faq-chevron { transform: rotate(45deg); }
 }
-
-/* Font utilities (v4 mapped these via @theme inline). Display type is Google Sans
-   Flex (self-hosted) to match the docsiv marketing site's heading typography. */
-.speediq-landing .font-display { font-family: var(--font-google-sans-flex), "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif; }
-.speediq-landing .font-sans { font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif; }
-
-/* Every landing heading uses the display font at weight 400 — matching docsiv's
-   heading type in both family and weight. These rules are unlayered, so they beat
-   the Tailwind font-semibold / font-medium utilities the components set inline. */
-.speediq-landing h1,
-.speediq-landing h2,
-.speediq-landing h3,
-.speediq-landing h4,
-.speediq-landing h5,
-.speediq-landing h6 {
-  font-family: var(--font-google-sans-flex), "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
-  font-weight: 400;
-}
-
-/* Lime accent (v4 custom color from @theme). */
-.speediq-landing .bg-lime { background-color: var(--lime); }
-.speediq-landing .text-lime { color: var(--lime); }
-.speediq-landing .border-lime { border-color: var(--lime); }
-
-/* Restore default corner radii inside the scope — the app's tailwind.config
- * zeroes rounded-sm/md/lg globally; the landing relies on rounded corners. */
-.speediq-landing .rounded-xs { border-radius: 0.125rem; }
-.speediq-landing .rounded-sm { border-radius: 0.125rem; }
-.speediq-landing .rounded-md { border-radius: 0.375rem; }
-.speediq-landing .rounded-lg { border-radius: 0.5rem; }
-.speediq-landing .rounded-t-md { border-top-left-radius: 0.375rem; border-top-right-radius: 0.375rem; }
-.speediq-landing .rounded-b-md { border-bottom-left-radius: 0.375rem; border-bottom-right-radius: 0.375rem; }
-.speediq-landing .rounded-tl-md { border-top-left-radius: 0.375rem; }
-.speediq-landing .rounded-tl-lg { border-top-left-radius: 0.5rem; }
-
-/* ---------- Hero / footer gradients & textures ---------- */
-.speediq-landing .hero-gradient {
-  background:
-    radial-gradient(52% 42% at 50% -8%, rgba(37, 99, 235, 0.10) 0%, rgba(37, 99, 235, 0) 62%),
-    radial-gradient(38% 34% at 88% 4%, rgba(244, 123, 63, 0.07) 0%, rgba(244, 123, 63, 0) 60%),
-    radial-gradient(40% 34% at 8% 12%, rgba(45, 158, 94, 0.06) 0%, rgba(45, 158, 94, 0) 60%),
-    linear-gradient(180deg, #f6f8fc 0%, #fafbfe 46%, #ffffff 100%);
-}
-.speediq-landing .footer-gradient {
-  background:
-    radial-gradient(80% 95% at -10% -12%, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.3) 36%, rgba(255, 255, 255, 0) 62%),
-    radial-gradient(80% 95% at 110% -12%, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.3) 36%, rgba(255, 255, 255, 0) 62%),
-    radial-gradient(66% 50% at 50% 44%, rgba(18, 32, 56, 0.55) 0%, rgba(18, 32, 56, 0.22) 48%, rgba(18, 32, 56, 0) 76%),
-    radial-gradient(130% 75% at 50% 116%, rgba(120, 150, 185, 0.12) 0%, rgba(10, 16, 26, 0) 55%),
-    linear-gradient(180deg, #ffffff 0%, #e9edf1 5%, #aab4c2 14%, #45566f 26%, #182742 38%, #0c1726 54%, #0a1422 100%);
-}
-.speediq-landing .analytics-bg { background-color: #e9ebf4; }
-.speediq-landing .hero-grid {
-  background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
-  background-size: 58px 58px;
-  -webkit-mask-image: radial-gradient(100% 58% at 50% 0%, #000 0%, transparent 70%);
-  mask-image: radial-gradient(100% 58% at 50% 0%, #000 0%, transparent 70%);
-}
-.speediq-landing .aurora {
-  background: radial-gradient(50% 50% at 50% 50%, rgba(120, 150, 195, 0.1) 0%, rgba(90, 120, 165, 0.05) 42%, transparent 72%);
-  animation: sl-breathe 11s ease-in-out infinite;
-}
-
-/* ---------- Animations ---------- */
-@keyframes sl-fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes sl-fadeDown { from { opacity: 0; transform: translateY(-14px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes sl-breathe { 0%, 100% { opacity: 0.55; transform: scale(1); } 50% { opacity: 1; transform: scale(1.08); } }
-@keyframes sl-floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
-@keyframes sl-limePulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.45); } 50% { box-shadow: 0 0 0 6px rgba(37, 99, 235, 0); } }
-@keyframes sl-leafPulse { 0%, 100% { opacity: 0.75; } 50% { opacity: 1; } }
-@keyframes sl-lineGrow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-
-.speediq-landing .animate-fade-up { opacity: 0; animation: sl-fadeUp 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
-.speediq-landing .animate-fade-down { opacity: 0; animation: sl-fadeDown 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
-.speediq-landing .floaty { animation: sl-floaty 5s ease-in-out infinite; }
-.speediq-landing .lime-pulse { animation: sl-limePulse 2.6s ease-in-out infinite; }
-.speediq-landing .leaf-pulse { animation: sl-leafPulse 3s ease-in-out infinite; }
-.speediq-landing .line-grow { transform-origin: var(--line-origin, left); animation: sl-lineGrow 1s cubic-bezier(0.22, 1, 0.36, 1) 0.5s both; }
-
-/* Reveal on scroll — `.in-view` is toggled by RevealObserver. */
-.speediq-landing .reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: opacity, transform;
-}
-.speediq-landing .reveal.in-view { opacity: 1; transform: none; }
-
-/* ---------- Pricing volume slider ---------- */
-.speediq-landing .sl-range {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 100%;
-  height: 6px;
-  border-radius: 9999px;
-  background: #e6e9f1;
-  outline: none;
-  cursor: pointer;
-}
-.speediq-landing .sl-range::-webkit-slider-runnable-track {
-  height: 6px;
-  border-radius: 9999px;
-  background: transparent;
-}
-.speediq-landing .sl-range::-moz-range-track {
-  height: 6px;
-  border-radius: 9999px;
-  background: transparent;
-}
-.speediq-landing .sl-range::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  height: 22px;
-  width: 22px;
-  margin-top: -8px;
-  border-radius: 9999px;
-  background: #ffffff;
-  border: 1px solid #d4d9e4;
-  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.12), 0 4px 10px -2px rgba(16, 24, 40, 0.22);
-  cursor: pointer;
-  transition: transform 0.12s ease;
-}
-.speediq-landing .sl-range::-webkit-slider-thumb:hover { transform: scale(1.06); }
-.speediq-landing .sl-range::-moz-range-thumb {
-  height: 22px;
-  width: 22px;
-  border-radius: 9999px;
-  background: #ffffff;
-  border: 1px solid #d4d9e4;
-  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.12), 0 4px 10px -2px rgba(16, 24, 40, 0.22);
-  cursor: pointer;
-}
-.speediq-landing .sl-range:focus-visible::-webkit-slider-thumb { outline: 2px solid #0526D9; outline-offset: 2px; }
 
 @media (prefers-reduced-motion: reduce) {
-  .speediq-landing .animate-fade-up,
-  .speediq-landing .animate-fade-down,
-  .speediq-landing .floaty,
-  .speediq-landing .lime-pulse,
-  .speediq-landing .leaf-pulse,
-  .speediq-landing .line-grow,
-  .speediq-landing .aurora {
-    animation: none !important;
-    opacity: 1 !important;
-    transform: none !important;
-  }
+  .rise { animation: none !important; }
+  html { scroll-behavior: auto; }
 }
-/* SpeedIQ landing — END ════════════════════════════════════════════════ */
