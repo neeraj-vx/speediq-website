@@ -64,6 +64,11 @@ export default function ComparePage() {
         <SectionHeader eyebrow="Feature by feature" title="What you get, side by side." size="sm" />
         <div className="mt-10 overflow-x-auto">
           <table className="w-full min-w-[720px] border-collapse text-left">
+            <colgroup>
+              <col className="w-[46%]" />
+              <col className="w-[22%]" />
+              <col className="w-[32%]" />
+            </colgroup>
             <thead>
               <tr className="border-b border-line">
                 <th className="pb-4 pr-6 text-[12px] font-semibold uppercase tracking-[0.12em] text-muted">Capability</th>
