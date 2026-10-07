@@ -1,0 +1,94 @@
+{
+  "generatedAt": "2026-10-07",
+  "note": "Static snapshot of SpeedIQ's public pricing: subscription_plans, credit_type_pricing and channel_country_rates as seeded by the app's migrations (pricing_margin 2.0). Edit by hand when plans change in the app's admin. countryRates = ceil(carrier cost x margin / credit price), at least 1.",
+  "tiers": [
+    {
+      "id": "starter",
+      "name": "Starter",
+      "max_contacts": 5000,
+      "max_seats": 3,
+      "max_campaigns_per_month": 50,
+      "analytics_retention_days": 30,
+      "channels": { "email": true, "whatsapp": true, "sms": false },
+      "features": {
+        "custom_email_domain": true,
+        "live_inbox": true,
+        "automations": "basic",
+        "api": false,
+        "custom_branding": false,
+        "custom_roles": false
+      },
+      "price_usd_monthly": 12,
+      "price_usd_yearly": 115,
+      "monthly_credits": 2000,
+      "monthly_credits_email": 2000,
+      "monthly_credits_sms": 0,
+      "monthly_credits_ai": 300,
+      "monthly_credits_voice": 0
+    },
+    {
+      "id": "pro",
+      "name": "Pro",
+      "max_contacts": 25000,
+      "max_seats": 10,
+      "max_campaigns_per_month": null,
+      "analytics_retention_days": 90,
+      "channels": { "email": true, "whatsapp": true, "sms": true, "voice": true },
+      "features": {
+        "custom_email_domain": true,
+        "live_inbox": true,
+        "automations": "full",
+        "api": true,
+        "custom_branding": true,
+        "custom_roles": false
+      },
+      "price_usd_monthly": 29,
+      "price_usd_yearly": 278,
+      "monthly_credits": 7000,
+      "monthly_credits_email": 7000,
+      "monthly_credits_sms": 300,
+      "monthly_credits_ai": 700,
+      "monthly_credits_voice": 60
+    },
+    {
+      "id": "business",
+      "name": "Business",
+      "max_contacts": 100000,
+      "max_seats": null,
+      "max_campaigns_per_month": null,
+      "analytics_retention_days": 365,
+      "channels": { "email": true, "whatsapp": true, "sms": true, "voice": true, "ai_assist": true },
+      "features": {
+        "custom_email_domain": true,
+        "live_inbox": true,
+        "automations": "full_branching",
+        "api": true,
+        "custom_branding": true,
+        "custom_roles": true,
+        "audit_log": true,
+        "sla": true
+      },
+      "price_usd_monthly": 79,
+      "price_usd_yearly": 759,
+      "monthly_credits": 24000,
+      "monthly_credits_email": 24000,
+      "monthly_credits_sms": 700,
+      "monthly_credits_ai": 1500,
+      "monthly_credits_voice": 120
+    }
+  ],
+  "creditTypes": [
+    { "credit_type": "email", "label": "Email credits", "credit_value_usd_cents": 0.18, "min_topup": 500, "topup_step": 500, "sort_order": 1, "active": true },
+    { "credit_type": "sms", "label": "SMS credits", "credit_value_usd_cents": 1.66, "min_topup": 100, "topup_step": 50, "sort_order": 2, "active": true },
+    { "credit_type": "ai", "label": "AI credits", "credit_value_usd_cents": 1.2, "min_topup": 100, "topup_step": 50, "sort_order": 3, "active": true },
+    { "credit_type": "voice", "label": "Voice credits", "credit_value_usd_cents": 2.8, "min_topup": 100, "topup_step": 50, "sort_order": 4, "active": true }
+  ],
+  "countryRates": [
+    { "country": "CA", "sms": 1, "voice": 1 },
+    { "country": "US", "sms": 1, "voice": 1 },
+    { "country": "IN", "sms": 11, "voice": 4 },
+    { "country": "AE", "sms": 14, "voice": 22 }
+  ],
+  "emailCredits": 1,
+  "aiCredits": 1
+}
