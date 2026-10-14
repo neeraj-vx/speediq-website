@@ -40,7 +40,7 @@ const faq = [
 function CellView({ cell, strong }: { cell: Cell; strong?: boolean }) {
   if (cell === true)
     return (
-      <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-accent-soft text-accent">
+      <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-accent text-white">
         <Icon name="check" className="h-3.5 w-3.5" strokeWidth={2.4} />
       </span>
     );
@@ -60,9 +60,9 @@ export default function ComparePage() {
         compact
       />
 
-      <Section>
+      <Section size="sm">
         <SectionHeader eyebrow="Feature by feature" title="What you get, side by side." size="sm" />
-        <div className="mt-10 overflow-x-auto">
+        <div className="mt-10 overflow-x-auto rounded-[24px] bg-mist-2 p-3 sm:rounded-[28px] sm:p-5">
           <table className="w-full min-w-[720px] border-collapse text-left">
             <colgroup>
               <col className="w-[46%]" />
@@ -70,18 +70,18 @@ export default function ComparePage() {
               <col className="w-[32%]" />
             </colgroup>
             <thead>
-              <tr className="border-b border-line">
-                <th className="pb-4 pr-6 text-[12px] font-semibold uppercase tracking-[0.12em] text-muted">Capability</th>
-                <th className="px-6 pb-4 text-[12px] font-semibold uppercase tracking-[0.12em] text-accent">SpeedIQ</th>
-                <th className="pl-6 pb-4 text-[12px] font-semibold uppercase tracking-[0.12em] text-muted">Separate tools</th>
+              <tr className="border-b border-mist-line">
+                <th className="px-4 pb-4 pt-2 text-[14px] font-medium text-muted">Capability</th>
+                <th className="px-6 pb-4 pt-2 text-[14px] font-medium text-accent">SpeedIQ</th>
+                <th className="px-6 pb-4 pt-2 text-[14px] font-medium text-muted">Separate tools</th>
               </tr>
             </thead>
             <tbody>
               {rows.map((r) => (
-                <tr key={r.label} className="border-b border-line last:border-b-0">
-                  <td className="py-4 pr-6 text-[15px] text-ink">{r.label}</td>
-                  <td className="bg-accent-soft/40 px-6 py-4"><CellView cell={r.speediq} strong /></td>
-                  <td className="py-4 pl-6"><CellView cell={r.tools} /></td>
+                <tr key={r.label} className="border-b border-mist-line last:border-b-0">
+                  <td className="px-4 py-4 text-[15px] text-ink">{r.label}</td>
+                  <td className="bg-white/70 px-6 py-4"><CellView cell={r.speediq} strong /></td>
+                  <td className="px-6 py-4"><CellView cell={r.tools} /></td>
                 </tr>
               ))}
             </tbody>
@@ -89,7 +89,7 @@ export default function ComparePage() {
         </div>
       </Section>
 
-      <Section tone="surface">
+      <Section>
         <SectionHeader eyebrow="Why it matters" title="Fewer tools, more context." size="sm" />
         <FeatureGrid items={[...values]} cols={2} className="mt-10" />
       </Section>

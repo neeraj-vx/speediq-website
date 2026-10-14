@@ -53,7 +53,7 @@ export default function AboutPage() {
         </div>
       </Section>
 
-      <Section tone="surface">
+      <Section>
         <SectionHeader eyebrow="What we value" title="How we work." size="sm" />
         <FeatureGrid items={[...values]} cols={3} className="mt-10" />
       </Section>

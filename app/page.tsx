@@ -1,64 +1,100 @@
-import { ChannelStrip, CTA, FAQ, FeatureGrid, PricingTeaser, SplitFeature, Steps } from "@/components/site/blocks";
-import { Icon, type IconName } from "@/components/site/icons";
-import { ProductShot } from "@/components/site/ProductShot";
-import { Button, Container, Eyebrow, Heading, Lede, Section, SectionHeader } from "@/components/site/primitives";
+import { HeroShowcase } from "@/components/home/HeroShowcase";
+import {
+  Bento,
+  ChannelGrid,
+  ClosingCta,
+  FaqSection,
+  FeatureCards,
+  HeroShapes,
+  Orbit,
+  StepsRing,
+  TeamCards,
+  type FeatureCardData,
+} from "@/components/home/sections";
+import type { IconName } from "@/components/site/icons";
+import { CircleLink, SoftLink } from "@/components/site/pills";
+import { Container } from "@/components/site/primitives";
 import { SIGN_UP_URL } from "@/lib/landing/links";
 
-/* Home: the long landing page. Product-first; every visual is a screenshot
-   of the app (components/site/ProductShot renders a placeholder until the
-   file exists in public/product). */
+/* Home: white page, cool grey cards, blue gradient panels around real
+   screenshots of the app (public/product). Content is SpeedIQ's own; nothing
+   here claims customers, reviews or results we cannot back up. */
 
-const pillars: { icon: IconName; title: string; body: string; items: { label: string; href: string }[] }[] = [
+const features: FeatureCardData[] = [
   {
-    icon: "target",
-    title: "Capture",
-    body: "Fill the pipeline from every source, without exports or copy-paste.",
-    items: [
-      { label: "Forms & AI chat forms", href: "/features/forms" },
-      { label: "Booking pages", href: "/features/booking" },
-      { label: "Instagram, Facebook & Google Ads leads", href: "/features/social" },
-      { label: "Google Maps prospecting", href: "/features/prospecting" },
-      { label: "Webhooks & CSV import", href: "/features" },
+    title: "Inbox & live chat",
+    body: "Messages from every channel the same person uses collapse into one timeline, with assignment, private notes and canned replies. Add the chat widget to your site with one script tag and visitors land in the same queue.",
+    chips: [
+      { icon: "users", label: "Assignment" },
+      { icon: "note", label: "Private notes" },
+      { icon: "chat", label: "Live chat widget" },
+      { icon: "calendar", label: "Calls & bookings" },
     ],
+    cta: { label: "Explore the inbox", href: "/features/inbox" },
+    shot: { src: "/product/live-chat.png", alt: "Live chat widget set-up with a branded preview of the widget" },
+    tone: "periwinkle",
+    zoom: 3,
+    start: { x: 0.66, y: 0.28 },
   },
   {
-    icon: "inbox",
-    title: "Converse",
-    body: "Answer every channel from one inbox, with the AI handling the first reply.",
-    items: [
-      { label: "Unified inbox & live chat", href: "/features/inbox" },
-      { label: "WhatsApp Business", href: "/features/whatsapp" },
-      { label: "Email & SMS", href: "/features/email" },
-      { label: "Voice & WhatsApp calling", href: "/features/voice" },
-      { label: "AI assistant with hand-off", href: "/features/automations" },
+    title: "AI assistant",
+    body: "Give the assistant a personality and your knowledge base. On website chat, WhatsApp and social DMs it greets people by name, answers questions, captures details, books an open slot and hands off to your team when a human should take over.",
+    chips: [
+      { icon: "sparkle", label: "Auto-send or review" },
+      { icon: "clock", label: "Office hours & caps" },
+      { icon: "calendar", label: "Books appointments" },
+      { icon: "shield", label: "Every action logged" },
     ],
+    cta: { label: "See AI & workflows", href: "/features/automations" },
+    shot: { src: "/product/ai-conversations.png", alt: "AI Conversations showing assistant replies sent and one waiting for review" },
+    tone: "sky",
+    zoom: 1.4,
+    start: { x: 0, y: 0.04 },
   },
   {
-    icon: "pipeline",
-    title: "Convert",
-    body: "Work every deal, automate the follow-up and see what is working.",
-    items: [
-      { label: "CRM & pipelines", href: "/features/crm" },
-      { label: "Workflows & sequences", href: "/features/automations" },
-      { label: "Lead routing", href: "/features/automations" },
-      { label: "Campaigns & templates", href: "/features" },
-      { label: "Analytics & reporting", href: "/features/analytics" },
+    title: "CRM & pipelines",
+    body: "Leads are created from chats, forms, bookings, ads and the map, then move through drag-and-drop pipelines with scoring, source attribution, tasks and custom fields. One record per person, every channel merged.",
+    chips: [
+      { icon: "pipeline", label: "Drag-and-drop stages" },
+      { icon: "target", label: "Lead scoring" },
+      { icon: "tag", label: "Source attribution" },
+      { icon: "note", label: "Tasks & notes" },
     ],
+    cta: { label: "Explore the CRM", href: "/features/crm" },
+    shot: { src: "/product/pipeline.png", alt: "A sales pipeline board with leads grouped by stage and deal value" },
+    tone: "indigo",
+    zoom: 1.45,
+    start: { x: 0, y: 0.1 },
+  },
+  {
+    title: "Workflows",
+    body: "A visual, no-code builder: trigger on a new lead, a message, a stage change or a booking, branch on any field, then assign, tag, message, create a task, call a webhook or run AI. Sequences space the follow-up out and stop when the person replies.",
+    chips: [
+      { icon: "bolt", label: "Triggers" },
+      { icon: "branch", label: "If / else branches" },
+      { icon: "route", label: "Lead routing" },
+      { icon: "history", label: "Run history" },
+    ],
+    cta: { label: "See the builder", href: "/features/automations" },
+    shot: { src: "/product/workflow.png", alt: "The visual workflow builder with a trigger, a WhatsApp message and a yes/no branch" },
+    tone: "slate",
+    zoom: 1.8,
+    start: { x: 0.25, y: 0.25 },
   },
 ];
 
-const steps = [
+const teamItems: { icon: IconName; title: string; body: string; tag: string }[] = [
+  { icon: "users", title: "No per-seat fees", body: "Invite the whole team within your plan's member limit. You pay for the plan and credits, not heads.", tag: "Pricing" },
+  { icon: "eye-off", title: "Masked agent role", body: "Reps work leads while phone numbers and emails stay hidden, enforced at the database level.", tag: "Privacy" },
+  { icon: "layers", title: "Projects as workspaces", body: "Separate brands or clients, each with its own channels, team, settings and billing.", tag: "Workspaces" },
+  { icon: "language", title: "English & Arabic", body: "A full right-to-left interface for Arabic-speaking teams, switchable per user.", tag: "Language" },
+];
+
+const steps: { icon: IconName; title: string; body: string }[] = [
   { icon: "webhook", title: "Connect your channels", body: "WhatsApp through Meta's embedded signup, Instagram and Facebook, your email domain, an SMS number, and the chat widget on your site." },
   { icon: "upload", title: "Bring in your leads", body: "Import a CSV, publish a form or booking page, sync your ad accounts, or scan the map. Every lead lands in one CRM." },
   { icon: "bolt", title: "Automate the follow-up", body: "Route new leads, let the AI answer first, run sequences, and watch delivery and revenue in one place." },
-] as const;
-
-const teamItems = [
-  { icon: "users", title: "No per-seat fees", body: "Invite the whole team within your plan's member limit. You pay for the plan and credits, not heads." },
-  { icon: "eye-off", title: "Masked agent role", body: "Reps work leads while phone numbers and emails stay hidden, enforced at the database level." },
-  { icon: "layers", title: "Projects as workspaces", body: "Separate brands or clients, each with its own channels, team, settings and billing." },
-  { icon: "language", title: "English & Arabic", body: "A full right-to-left interface for Arabic-speaking teams, switchable per user." },
-] satisfies { icon: IconName; title: string; body: string }[];
+];
 
 const faq = [
   { q: "Which channels does SpeedIQ support?", a: "WhatsApp (official Business Platform), Instagram and Facebook DMs, comments and lead ads, Google Ads lead forms, website live chat, email, SMS and voice calls, including WhatsApp calling." },
@@ -72,130 +108,40 @@ export default function Home() {
   return (
     <main>
       {/* Hero */}
-      <section className="hero-glow">
-        <Container className="pt-14 sm:pt-20">
-          <div className="mx-auto max-w-3xl text-center">
-            <Eyebrow className="rise rise-1">Customer messaging platform</Eyebrow>
-            <Heading as="h1" size="xl" className="rise rise-2 mt-5">
+      <section className="relative">
+        <HeroShapes />
+        <Container className="relative pt-12 sm:pt-16">
+          <div className="mx-auto max-w-4xl text-center">
+            <h1 className="rise rise-1 text-balance font-display text-[44px] font-light leading-[1.02] tracking-[-0.04em] text-ink sm:text-[68px] lg:text-[84px]">
               Every customer conversation, <span className="text-accent">one inbox.</span>
-            </Heading>
-            <Lede className="rise rise-3 mx-auto mt-6 max-w-2xl">
-              WhatsApp, Instagram, Facebook, website chat, email, SMS and calls land in one place. A CRM, booking, forms,
-              campaigns and an AI assistant sit around it, so leads get answered, qualified and followed up without the
-              tab-switching.
-            </Lede>
-            <div className="rise rise-4 mt-8 flex flex-wrap justify-center gap-3">
-              <Button href={SIGN_UP_URL} size="lg" arrow>
+            </h1>
+            <p className="rise rise-3 mx-auto mt-6 max-w-2xl text-pretty text-[17px] leading-[1.6] text-body sm:text-[19px]">
+              WhatsApp, Instagram, Facebook, website chat, email, SMS and calls land in one place. A CRM, booking, forms, campaigns and an AI assistant sit around it, so leads get answered, qualified and followed up without the tab-switching.
+            </p>
+            <div className="rise rise-4 mt-8 flex flex-wrap items-center justify-center gap-4">
+              <CircleLink href={SIGN_UP_URL} size="lg">
                 Get started free
-              </Button>
-              <Button href="/product" variant="secondary" size="lg">
+              </CircleLink>
+              <SoftLink href="/product" size="lg">
                 See how it works
-              </Button>
+              </SoftLink>
             </div>
-            <p className="rise rise-4 mt-4 text-[13px] text-muted">No per-seat fees · Official WhatsApp Business API · English & Arabic</p>
+            <p className="rise rise-4 mt-5 text-[13px] text-muted">No per-seat fees · Set up in an afternoon</p>
           </div>
-          <div className="rise rise-4 mt-12 sm:mt-16">
-            <ProductShot shot={{ src: "/product/inbox.png", alt: "The SpeedIQ inbox with WhatsApp, Instagram, email and website chat conversations in one list", label: "Inbox" }} priority />
+          <div className="rise rise-4 relative mt-12 sm:mt-16">
+            <HeroShowcase />
           </div>
         </Container>
       </section>
 
-      <Section size="sm">
-        <ChannelStrip />
-      </Section>
-
-      {/* Capture / Converse / Convert */}
-      <Section>
-        <SectionHeader
-          eyebrow="One platform"
-          title="Capture, converse and convert"
-          accent="from a single workspace."
-          lede="Point tools give you a WhatsApp app, an email tool, a helpdesk and a CRM that barely talk to each other. SpeedIQ is the whole loop, with one contact record underneath."
-        />
-        <div className="mt-12 grid gap-4 lg:grid-cols-3">
-          {pillars.map((p) => (
-            <div key={p.title} className="rounded-lg border border-line bg-white p-7">
-              <span className="flex h-10 w-10 items-center justify-center rounded-md bg-ink text-white">
-                <Icon name={p.icon} className="h-5 w-5" />
-              </span>
-              <h3 className="mt-5 text-[22px] font-medium text-ink">{p.title}</h3>
-              <p className="mt-2 text-[15px] leading-[1.6] text-body">{p.body}</p>
-              <ul className="mt-6 divide-y divide-line border-t border-line">
-                {p.items.map((it) => (
-                  <li key={it.label}>
-                    <a href={it.href} className="group flex items-center justify-between py-3 text-[14.5px] font-medium text-ink">
-                      {it.label}
-                      <Icon name="arrow" className="h-4 w-4 text-faint transition-transform group-hover:translate-x-0.5 group-hover:text-ink" strokeWidth={2} />
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </Section>
-
-      {/* Deep dives */}
-      <Section tone="surface">
-        <div className="space-y-20 sm:space-y-28">
-          <SplitFeature
-            eyebrow="Unified inbox & live chat"
-            title="One thread per customer,"
-            accent="whatever channel they pick."
-            body="Messages from every channel the same person uses collapse into one timeline, with assignment, private notes and canned replies. Add the live chat widget to your site with one script tag and visitors land in the same queue."
-            bullets={["Assign, note and resolve without leaving the thread", "Branded chat widget with starters, office hours and a help tab", "Calls, bookings and form submissions on the same timeline"]}
-            shot={{ src: "/product/live-chat.png", alt: "Live chat widget set-up with the branded widget preview", label: "Live chat" }}
-            cta={{ label: "Explore the inbox", href: "/features/inbox" }}
-          />
-          <SplitFeature
-            reverse
-            eyebrow="AI assistant"
-            title="The first reply,"
-            accent="handled."
-            body="Give the assistant a personality and your knowledge base. On website chat, WhatsApp and social DMs it greets people by name, answers questions, captures details, books an open slot in one step and hands off to your team when a human should take over."
-            bullets={["Draft-for-review or auto-send, with office hours, caps and rate limits", "Books appointments against your real availability", "Every AI action logged under AI Conversations"]}
-            shot={{ src: "/product/ai-conversations.png", alt: "AI Conversations showing assistant replies and the action log", label: "AI Conversations" }}
-            cta={{ label: "See workflows & AI", href: "/features/automations" }}
-          />
-          <SplitFeature
-            eyebrow="CRM & pipelines"
-            title="A CRM that fills itself"
-            accent="from the conversations."
-            body="Leads are created from chats, forms, bookings, ads and the map, then move through drag-and-drop pipelines with scoring, source attribution, tasks and custom fields. One record per person, every channel merged."
-            bullets={["As many pipelines and stages as you sell with", "Lead scoring from rules you set", "Tasks, notes and operations records on the lead"]}
-            shot={{ src: "/product/pipeline.png", alt: "A pipeline board with leads in stages", label: "Pipeline" }}
-            cta={{ label: "Explore the CRM", href: "/features/crm" }}
-          />
-          <SplitFeature
-            reverse
-            eyebrow="Workflows"
-            title="Follow-up that runs"
-            accent="while you sleep."
-            body="A visual, no-code builder: trigger on a new lead, a message, a stage change or a booking, branch on any field, then assign, tag, message, create a task, call a webhook or run AI. Sequences space the follow-up out and stop when the person replies."
-            bullets={["Round-robin, weighted or fixed lead routing", "Multi-step sequences on email, SMS or WhatsApp", "Run history that shows what fired and why"]}
-            shot={{ src: "/product/workflow.png", alt: "The visual workflow builder", label: "Workflow builder" }}
-            cta={{ label: "See the builder", href: "/features/automations" }}
-          />
-        </div>
-      </Section>
-
-      {/* How it works */}
-      <Section>
-        <SectionHeader eyebrow="How it works" title="Up and running" accent="in an afternoon." lede="No engineers needed. Connect, import, automate." />
-        <div className="mt-12">
-          <Steps steps={[...steps]} />
-        </div>
-      </Section>
-
-      {/* Team */}
-      <Section tone="surface">
-        <SectionHeader eyebrow="Built for teams" title="Add everyone." accent="Keep control." lede="Roles, privacy and workspaces that let a growing team work from one place without exposing customer data or paying by the head." />
-        <FeatureGrid items={teamItems} cols={4} className="mt-12" />
-      </Section>
-
-      <PricingTeaser />
-      <FAQ items={faq} />
-      <CTA />
+      <Bento shot={{ src: "/product/pipeline.png", alt: "Pipeline stages with deal values and lead sources" }} />
+      <ChannelGrid />
+      <FeatureCards items={features} />
+      <TeamCards items={teamItems} />
+      <Orbit />
+      <StepsRing steps={steps} />
+      <FaqSection items={faq} />
+      <ClosingCta />
     </main>
   );
 }

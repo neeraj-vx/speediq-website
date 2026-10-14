@@ -13,16 +13,15 @@ import { SITE_URL } from "@/lib/landing/site";
 import "./globals.css";
 
 // Body type.
+// Variable (no `weight` list) so intermediate weights such as 450 and 550 render.
 const inter = Inter({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
   variable: "--font-inter",
 });
 
 // Fallback for the display font while Google Sans Flex loads.
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
   variable: "--font-sans",
 });
 

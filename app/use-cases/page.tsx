@@ -70,16 +70,16 @@ export default function UseCasesPage() {
         compact
       />
 
-      <Section>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <Section size="sm">
+        <div className="grid gap-3 sm:gap-4 md:grid-cols-2 lg:grid-cols-3">
           {cases.map((c) => (
-            <div key={c.title} className="flex flex-col rounded-lg border border-line bg-white p-7">
-              <span className="flex h-10 w-10 items-center justify-center rounded-md bg-accent-soft text-accent">
-                <Icon name={c.icon} className="h-5 w-5" />
+            <div key={c.title} className="flex flex-col rounded-[24px] bg-mist-2 p-6 sm:rounded-[28px] sm:p-7">
+              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-accent">
+                <Icon name={c.icon} className="h-[22px] w-[22px]" />
               </span>
-              <h3 className="mt-5 text-[20px] font-medium text-ink">{c.title}</h3>
-              <p className="mt-2 text-[14.5px] leading-[1.6] text-body">{c.body}</p>
-              <ul className="mt-5 space-y-2 border-t border-line pt-5">
+              <h3 className="mt-8 font-display text-[24px] font-light tracking-[-0.02em] text-ink">{c.title}</h3>
+              <p className="mt-2.5 text-[15px] leading-[1.65] text-body">{c.body}</p>
+              <ul className="mt-5 space-y-2.5 border-t border-mist-line pt-5">
                 {c.plays.map((p) => (
                   <li key={p} className="flex items-start gap-2.5 text-[14px] leading-6 text-body">
                     <Icon name="check" className="mt-1.5 h-3.5 w-3.5 shrink-0 text-accent" strokeWidth={2.4} />
@@ -92,26 +92,26 @@ export default function UseCasesPage() {
         </div>
       </Section>
 
-      <Section tone="surface">
+      <Section>
         <SectionHeader eyebrow="Before and after" title="From scattered tools to one workspace." size="sm" />
-        <div className="mt-10 grid gap-4 md:grid-cols-2">
-          <div className="rounded-lg border border-line bg-white p-7">
-            <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-muted">Without SpeedIQ</p>
+        <div className="mt-10 grid gap-3 sm:gap-4 md:grid-cols-2">
+          <div className="rounded-[24px] bg-mist-2 p-7 sm:rounded-[28px] sm:p-8">
+            <p className="text-[15px] font-medium text-muted">Without SpeedIQ</p>
             <ul className="mt-5 space-y-3">
               {without.map((w) => (
                 <li key={w} className="flex items-start gap-3 text-[15px] leading-6 text-body">
-                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-line-strong" />
+                  <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-line-strong" />
                   {w}
                 </li>
               ))}
             </ul>
           </div>
-          <div className="rounded-lg border border-accent bg-white p-7 shadow-card">
-            <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-accent">With SpeedIQ</p>
+          <div className="rounded-[24px] bg-accent p-7 text-white sm:rounded-[28px] sm:p-8">
+            <p className="text-[15px] font-medium text-white/70">With SpeedIQ</p>
             <ul className="mt-5 space-y-3">
               {withSpeedIQ.map((w) => (
-                <li key={w} className="flex items-start gap-3 text-[15px] leading-6 text-ink">
-                  <Icon name="check" className="mt-1.5 h-4 w-4 shrink-0 text-accent" strokeWidth={2.4} />
+                <li key={w} className="flex items-start gap-3 text-[15px] leading-6 text-white">
+                  <Icon name="check" className="mt-1.5 h-4 w-4 shrink-0 text-white" strokeWidth={2.4} />
                   {w}
                 </li>
               ))}

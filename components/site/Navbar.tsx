@@ -9,6 +9,7 @@ import { featureGroups, resourceItems } from "@/components/landing/nav-data";
 import { LOGIN_URL, SIGN_UP_URL } from "@/lib/landing/links";
 
 import { Icon, LogoMark } from "./icons";
+import { CircleLink } from "./pills";
 import { Container } from "./primitives";
 
 /* Site-wide sticky header. Desktop: logo, Product, two hover mega menus
@@ -84,14 +85,14 @@ export default function Navbar() {
 
   const link = (active: boolean) =>
     `inline-flex h-9 items-center gap-1 rounded-full px-3.5 text-[14.5px] font-medium transition-colors ${
-      active ? "bg-surface-2 text-ink" : "text-body hover:bg-surface hover:text-ink"
+      active ? "bg-mist text-ink" : "text-ink/80 hover:bg-mist-2 hover:text-ink"
     }`;
 
   return (
     <>
       <header
         className={`sticky top-0 z-50 border-b transition-colors ${
-          scrolled ? "border-line bg-white/85 backdrop-blur-md" : "border-transparent bg-white/0"
+          scrolled ? "border-mist-line bg-paper/85 backdrop-blur-md" : "border-transparent bg-paper/0"
         }`}
       >
         <Container>
@@ -138,16 +139,14 @@ export default function Navbar() {
             </nav>
 
             <div className="flex items-center gap-2">
-              <a href={LOGIN_URL} className="hidden h-9 items-center rounded-full px-3.5 text-[14.5px] font-medium text-body hover:bg-surface hover:text-ink md:inline-flex">
+              <a href={LOGIN_URL} className="hidden h-10 items-center rounded-full bg-mist px-5 text-[14.5px] font-medium text-ink transition-colors hover:bg-[#e3e7f1] md:inline-flex">
                 Log in
               </a>
-              <a
-                href={SIGN_UP_URL}
-                className="hidden h-9 items-center gap-1.5 rounded-full bg-ink px-4 text-[14.5px] font-medium text-white transition-colors hover:bg-accent md:inline-flex"
-              >
-                Get started
-                <Icon name="arrow-up-right" className="h-3.5 w-3.5" strokeWidth={2.2} />
-              </a>
+              <div className="hidden pl-1 md:block">
+                <CircleLink href={SIGN_UP_URL} size="sm">
+                  Get started
+                </CircleLink>
+              </div>
               <button
                 type="button"
                 aria-label="Menu"
@@ -165,7 +164,7 @@ export default function Navbar() {
                   <div
                     onMouseEnter={cancelClose}
                     onMouseLeave={scheduleClose}
-                    className="pointer-events-auto overflow-hidden rounded-lg border border-line bg-white p-5 shadow-[0_30px_80px_-24px_rgba(11,15,25,0.35)]"
+                    className="pointer-events-auto overflow-hidden rounded-[26px] bg-white p-5 shadow-[0_30px_80px_-24px_rgba(11,15,25,0.35)] ring-1 ring-mist-line"
                     style={{ width: openMenu === "features" ? "min(920px, calc(100vw - 2rem))" : "min(560px, calc(100vw - 2rem))" }}
                   >
                     {openMenu === "features" ? <FeaturesMenu onNavigate={closeNow} /> : <ResourcesMenu onNavigate={closeNow} />}
@@ -178,7 +177,7 @@ export default function Navbar() {
       </header>
 
       {open ? (
-        <div className="fixed inset-0 z-[60] flex flex-col bg-white px-5 pb-6 pt-3 md:hidden">
+        <div className="fixed inset-0 z-[60] flex flex-col bg-paper px-5 pb-6 pt-3 md:hidden">
           <div className="flex h-12 items-center justify-between">
             <a href="/" className="inline-flex items-center gap-2.5 text-ink">
               <LogoMark className="h-6 w-auto" />
@@ -197,7 +196,7 @@ export default function Navbar() {
               <div className="flex flex-col gap-5 pb-2">
                 {featureGroups.map((group) => (
                   <div key={group.label}>
-                    <div className="mb-1 px-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted">{group.label}</div>
+                    <div className="mb-1 px-2 text-[13px] font-medium text-muted">{group.label}</div>
                     {group.items.map((item) => (
                       <MobileLink key={item.name} item={item} />
                     ))}
@@ -221,7 +220,7 @@ export default function Navbar() {
           </nav>
 
           <div className="grid grid-cols-2 gap-3">
-            <a href={LOGIN_URL} className="inline-flex h-12 items-center justify-center rounded-full border border-line-strong text-[15px] font-medium text-ink">
+            <a href={LOGIN_URL} className="inline-flex h-12 items-center justify-center rounded-full bg-mist text-[15px] font-medium text-ink">
               Log in
             </a>
             <a href={SIGN_UP_URL} className="inline-flex h-12 items-center justify-center rounded-full bg-ink text-[15px] font-medium text-white">
@@ -249,10 +248,10 @@ function MobileAccordion({ label, expanded, onToggle, children }: { label: strin
 }
 
 function MobileLink({ item }: { item: { name: string; href: string; blurb: string; color: string; icon: (p: { className?: string }) => React.ReactNode } }) {
-  const { name, href, blurb, color, icon: ItemIcon } = item;
+  const { name, href, blurb, icon: ItemIcon } = item;
   return (
-    <a href={href} className="flex items-center gap-3 rounded-md px-2 py-2.5 transition-colors hover:bg-surface">
-      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-line bg-white" style={{ color }}>
+    <a href={href} className="flex items-center gap-3 rounded-[16px] px-2 py-2.5 transition-colors hover:bg-mist-2">
+      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-mist text-accent">
         <ItemIcon className="h-[17px] w-[17px]" />
       </span>
       <span className="min-w-0">

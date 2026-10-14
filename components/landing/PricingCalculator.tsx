@@ -126,25 +126,25 @@ export default function PricingCalculator({
     cycle === "monthly" ? t.price_usd_monthly : t.price_usd_yearly;
 
   return (
-    <div className="w-full bg-white pb-8 pt-4">
+    <div className="w-full pb-12 pt-2 sm:pb-16">
       <div className="mx-auto w-full max-w-site px-5 sm:px-8">
         {/* Model note + billing-cycle toggle */}
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-          <p className="max-w-md text-[13px] leading-6 text-[#5b616e]">
+          <p className="max-w-md text-[13px] leading-6 text-body">
             Fixed monthly plans, each with separate channel credit buckets included.{" "}
-            <span className="font-medium text-[#11161f]">
+            <span className="font-medium text-ink">
               WhatsApp &amp; social DMs do not use SpeedIQ credits — platform and provider terms apply separately.
             </span>
           </p>
           <div className="flex flex-wrap items-center gap-2">
-            <div className="inline-flex rounded-full border border-[#e3e7f0] bg-[#f6f7fb] p-0.5">
+            <div className="inline-flex rounded-full bg-mist p-0.5">
               {(["monthly", "yearly"] as Cycle[]).map((c) => (
                 <button
                   key={c}
                   type="button"
                   onClick={() => setCycle(c)}
                   className={`rounded-full px-3 py-1 text-[12px] font-semibold capitalize transition-colors ${
-                    cycle === c ? "bg-[#11161f] text-white" : "text-[#5b616e]"
+                    cycle === c ? "bg-ink text-white" : "text-body"
                   }`}
                 >
                   {c}
@@ -165,10 +165,10 @@ export default function PricingCalculator({
             >
               {/* Header row: heading on the left, cards on the right */}
               <div className="flex flex-col justify-end self-end pb-3 pr-8">
-                <div className="font-display text-[26px] font-semibold tracking-tight text-[#11161f]">
+                <div className="font-display text-[30px] font-light tracking-[-0.02em] text-ink">
                   Compare plans
                 </div>
-                <p className="mt-1 text-[13px] text-[#7a808b]">
+                <p className="mt-1 text-[13px] text-muted">
                   One fixed price per plan, credits included.
                 </p>
               </div>
@@ -178,37 +178,37 @@ export default function PricingCalculator({
                 return (
                   <div key={t.id} className="px-2">
                     <div
-                      className={`flex h-full flex-col rounded-2xl border bg-white p-6 text-left transition-[border-color,box-shadow,transform] duration-300 ease-out ${
+                      className={`flex h-full flex-col rounded-[28px] bg-mist-2 p-6 text-left transition-[border-color,box-shadow,transform] duration-300 ease-out ${
                         recommended
-                          ? "z-10 border-[#0526D9] shadow-[0_20px_50px_-20px_rgba(37,99,235,0.45)] ring-1 ring-[#0526D9]/40 lg:-translate-y-2"
-                          : "border-[#e3e7f0] shadow-[0_1px_2px_rgba(16,22,31,0.04)]"
+                          ? "z-10 !bg-white shadow-[0_24px_60px_-24px_rgba(5,38,217,0.5)] ring-2 ring-accent lg:-translate-y-2"
+                          : ""
                       }`}
                     >
                       <div className="flex min-h-[24px] items-center justify-between">
-                        <span className="text-[15px] font-semibold capitalize text-[#11161f]">{t.name}</span>
+                        <span className="text-[15px] font-semibold capitalize text-ink">{t.name}</span>
                         <span
-                          className={`rounded-full bg-[#0526D9] px-2.5 py-1 text-[10px] font-bold tracking-wide text-white transition-opacity duration-300 ${
+                          className={`rounded-full bg-accent px-2.5 py-1 text-[10px] font-bold tracking-wide text-white transition-opacity duration-300 ${
                             recommended ? "opacity-100" : "opacity-0"
                           }`}
                         >
                           MOST POPULAR
                         </span>
                       </div>
-                      <p className="mt-1 text-[13px] text-[#7a808b]">{tierBlurb(t.id)}</p>
+                      <p className="mt-1 text-[13px] text-muted">{tierBlurb(t.id)}</p>
 
                       <div className="mt-5">
                         <div className="flex items-end gap-1.5">
-                          <span className="font-display text-[34px] font-semibold leading-none tracking-tight text-[#11161f]">
+                          <span className="font-display text-[40px] font-light leading-none tracking-[-0.03em] text-ink">
                             {price != null ? money(price) : "–"}
                           </span>
                           {price != null && (
-                            <span className="pb-1 text-[13px] text-[#8a8f9b]">
+                            <span className="pb-1 text-[13px] text-muted">
                               / {cycle === "monthly" ? "mo" : "yr"}
                             </span>
                           )}
                         </div>
                         <p
-                          className={`mt-1 text-[12px] text-[#7a808b] transition-opacity duration-300 ${
+                          className={`mt-1 text-[12px] text-muted transition-opacity duration-300 ${
                             price != null && cycle === "yearly" ? "opacity-100" : "opacity-0"
                           }`}
                         >
@@ -218,7 +218,7 @@ export default function PricingCalculator({
                         </p>
                       </div>
 
-                      <p className={`mt-2 text-[12px] ${recommended ? "font-medium text-[#0526D9]" : "text-[#7a808b]"}`}>
+                      <p className={`mt-2 text-[12px] ${recommended ? "font-medium text-accent" : "text-muted"}`}>
                         {[
                           t.monthly_credits_email ? `${num(t.monthly_credits_email)} email` : null,
                           t.monthly_credits_sms ? `${num(t.monthly_credits_sms)} SMS` : null,
@@ -227,16 +227,16 @@ export default function PricingCalculator({
                         ]
                           .filter(Boolean)
                           .join(" · ") || "Credits included"}
-                        <span className="text-[#7a808b]"> credits / mo</span>
+                        <span className="text-muted"> credits / mo</span>
                       </p>
-                      <p className="mt-1 text-[12px] text-[#7a808b]">
+                      <p className="mt-1 text-[12px] text-muted">
                         + top up SMS, Voice &amp; AI anytime
                       </p>
 
                       <a
                         href={checkoutHref({ kind: "plan", plan: isPlanId(t.id) ? t.id : "starter", cycle })}
-                        className={`mt-6 inline-flex w-full items-center justify-center rounded-md py-3 text-[14px] font-semibold transition-colors duration-300 ${
-                          recommended ? "bg-[#0526D9] text-white hover:bg-[#1d4ed8]" : "bg-[#11161f] text-white hover:bg-[#232a36]"
+                        className={`mt-6 inline-flex w-full items-center justify-center rounded-full py-3 text-[14.5px] font-medium transition-colors duration-300 ${
+                          recommended ? "bg-accent text-white hover:bg-accent-ink" : "bg-white text-ink hover:bg-mist"
                         }`}
                       >
                         Get started
@@ -249,19 +249,19 @@ export default function PricingCalculator({
               {/* Feature sections flow directly under the cards, columns aligned */}
               {SECTIONS.map((section) => (
                 <Fragment key={section.title}>
-                  <div className="col-span-full border-t border-[#e6e9f1] pb-3 pt-8 text-[12px] font-semibold uppercase tracking-wide text-[#8a8f9b]">
+                  <div className="col-span-full border-t border-mist-line pb-3 pt-8 text-[12px] font-semibold uppercase tracking-wide text-muted">
                     {section.title}
                   </div>
                   {section.rows.map((row) => (
                     <Fragment key={row.label}>
-                      <div className="border-t border-[#eef0f5] py-3.5 pr-8 text-[13px] text-[#3b4150]">
+                      <div className="border-t border-mist-line py-3.5 pr-8 text-[13px] text-body">
                         {row.label}
                       </div>
                       {tiers.map((t) => (
                         <div
                           key={t.id}
-                          className={`border-t border-[#eef0f5] py-3.5 text-center ${
-                            t.id === RECOMMENDED_TIER ? "bg-[#f6faf7]" : ""
+                          className={`border-t border-mist-line py-3.5 text-center ${
+                            t.id === RECOMMENDED_TIER ? "bg-accent-soft/60" : ""
                           }`}
                         >
                           <CellView cell={row.cell(t)} />
@@ -276,16 +276,16 @@ export default function PricingCalculator({
         )}
 
         {/* Credit top-up estimator: what N credits cost as a one-time top-up */}
-        <div className="mt-20 rounded-2xl border border-[#e3e7f0] bg-[#f9fafc] p-8 sm:p-10">
+        <div className="mt-16 rounded-[28px] bg-mist-2 p-7 sm:rounded-[34px] sm:p-10">
           <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
             <div className="lg:max-w-sm">
-              <span className="text-[12px] font-semibold uppercase tracking-wide text-[#8a8f9b]">
+              <span className="text-[12px] font-semibold uppercase tracking-wide text-muted">
                 Estimate a credit top-up
               </span>
-              <h3 className="mt-2 font-display text-[28px] font-semibold tracking-tight text-[#11161f]">
+              <h3 className="mt-2 font-display text-[34px] font-light tracking-[-0.025em] text-ink">
                 Need more credits?
               </h3>
-              <p className="mt-2 text-[14px] leading-7 text-[#7a808b]">
+              <p className="mt-2 text-[14px] leading-7 text-muted">
                 SMS, voice, email and AI each have their own credit bucket, priced separately. Slide
                 each one to the amount you want and buy them together in one payment — any time, no
                 plan change. Top-up credits never expire while your subscription is active.
@@ -303,13 +303,13 @@ export default function PricingCalculator({
                   return (
                     <div key={b.credit_type}>
                       <div className="flex items-baseline justify-between">
-                        <span className="text-[13px] font-medium text-[#11161f]">
+                        <span className="text-[13px] font-medium text-ink">
                           {label}{" "}
-                          <span className="font-normal text-[#7a808b]">
+                          <span className="font-normal text-muted">
                             {value > 0 ? `${num(value)} credits` : "none"}
                           </span>
                         </span>
-                        <span className="text-[15px] font-semibold text-[#11161f]">
+                        <span className="text-[15px] font-semibold text-ink">
                           {value > 0 ? money(bucketPrice(value, b)) : "–"}
                         </span>
                       </div>
@@ -328,30 +328,30 @@ export default function PricingCalculator({
                         aria-label={`${label} top-up credits`}
                         className="mt-2 h-1.5 w-full cursor-pointer appearance-none rounded-full"
                         style={{
-                          background: `linear-gradient(to right, #0526D9 0%, #0526D9 ${pct}%, #e3e7f0 ${pct}%, #e3e7f0 100%)`,
+                          background: `linear-gradient(to right, #0526D9 0%, #0526D9 ${pct}%, #dde1ec ${pct}%, #dde1ec 100%)`,
                         }}
                       />
-                      <div className="mt-1 text-[11px] text-[#a1a6b0]">≈ {money(bucketPrice(1000, b))} / 1,000</div>
+                      <div className="mt-1 text-[11px] text-faint">≈ {money(bucketPrice(1000, b))} / 1,000</div>
                     </div>
                   );
                 })}
               </div>
 
-              <div className="mt-6 flex items-baseline justify-between border-t border-[#e3e7f0] pt-4">
-                <span className="text-[13px] font-medium text-[#5b616e]">
+              <div className="mt-6 flex items-baseline justify-between border-t border-mist-line pt-4">
+                <span className="text-[13px] font-medium text-body">
                   {topupItems.length > 0 ? `${num(totalCredits(topupItems))} credits · one-time` : "Pick at least one bucket"}
                 </span>
-                <span className="font-display text-[22px] font-semibold text-[#11161f]">{topupTotal}</span>
+                <span className="font-display text-[26px] font-light text-ink">{topupTotal}</span>
               </div>
               {topupItems.length > 0 ? (
                 <a
                   href={checkoutHref({ kind: "topup", items: topupItems })}
-                  className="mt-4 inline-flex w-full items-center justify-center rounded-md bg-[#11161f] py-3.5 text-[15px] font-semibold text-white transition-transform hover:scale-[1.02]"
+                  className="mt-4 inline-flex w-full items-center justify-center rounded-full bg-accent py-3.5 text-[15px] font-medium text-white transition-colors hover:bg-accent-ink"
                 >
                   Buy these credits for {topupTotal}
                 </a>
               ) : (
-                <span className="mt-4 inline-flex w-full cursor-not-allowed items-center justify-center rounded-md bg-[#c4c9d4] py-3.5 text-[15px] font-semibold text-white">
+                <span className="mt-4 inline-flex w-full cursor-not-allowed items-center justify-center rounded-full bg-line-strong py-3.5 text-[15px] font-medium text-white">
                   Buy credits
                 </span>
               )}
@@ -366,12 +366,12 @@ export default function PricingCalculator({
 function CellView({ cell }: { cell: Cell }) {
   if (cell.kind === "check")
     return (
-      <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-[#e9f6ee]">
-        <svg viewBox="0 0 24 24" fill="none" className="h-3.5 w-3.5 text-[#1c7a47]">
+      <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-accent-soft">
+        <svg viewBox="0 0 24 24" fill="none" className="h-3.5 w-3.5 text-accent">
           <path d="M5 12.5l4 4 10-10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </span>
     );
-  if (cell.kind === "dash") return <span className="text-[#c4c9d4]">–</span>;
-  return <span className="text-[13px] font-medium text-[#11161f]">{cell.value}</span>;
+  if (cell.kind === "dash") return <span className="text-faint">–</span>;
+  return <span className="text-[13px] font-medium text-ink">{cell.value}</span>;
 }

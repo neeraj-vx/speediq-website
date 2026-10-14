@@ -55,8 +55,8 @@ export default function FeaturesPage() {
         compact
       />
 
-      {FEATURE_GROUPS.map((group, i) => (
-        <Section key={group.label} tone={i % 2 === 1 ? "surface" : "white"}>
+      {FEATURE_GROUPS.map((group) => (
+        <Section key={group.label} size="sm">
           <SectionHeader eyebrow={group.label} title={group.blurb} size="sm" />
           <FeatureGrid
             className="mt-10"

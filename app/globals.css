@@ -27,6 +27,11 @@
   --radius-lg: 20px;
   --radius-xl: 28px;
   --shadow-shot: 0 1px 2px rgba(11, 15, 25, 0.06), 0 24px 60px -24px rgba(11, 15, 25, 0.25);
+  /* Cool neutral surfaces used by the home page and the site chrome. */
+  --paper: #ffffff;
+  --mist: #eef0f5;
+  --mist-2: #f5f6fa;
+  --mist-line: #e3e6ee;
 }
 
 @layer base {
@@ -38,10 +43,11 @@
     -webkit-text-size-adjust: 100%;
   }
   body {
-    background: #ffffff;
+    background: var(--paper);
     color: var(--ink);
     font-family: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
     font-feature-settings: "cv11", "ss01";
+    font-weight: 450;
   }
   ::selection {
     background: var(--accent-soft-2);
@@ -49,7 +55,7 @@
   }
   h1, h2, h3, h4 {
     font-family: var(--font-google-sans-flex), "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
-    font-weight: 500;
+    font-weight: 550;
     letter-spacing: -0.025em;
     color: var(--ink);
   }
@@ -65,22 +71,38 @@
   .text-pretty {
     text-wrap: pretty;
   }
-  /* Soft blue halo behind the hero product shot. */
-  .hero-glow {
+  /* Pastel gradient panels that frame a product screenshot. The ::before adds
+     a soft highlight so the flat gradient reads as a surface. */
+  .g-panel { position: relative; isolation: isolate; }
+  .g-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
     background:
-      radial-gradient(60% 50% at 50% 0%, rgba(5, 38, 217, 0.10) 0%, rgba(5, 38, 217, 0) 70%),
-      linear-gradient(180deg, #ffffff 0%, #f6f7fa 100%);
+      radial-gradient(55% 45% at 12% 0%, rgba(255, 255, 255, 0.5), transparent 70%),
+      radial-gradient(40% 40% at 95% 8%, rgba(255, 255, 255, 0.32), transparent 70%);
   }
-  /* Dotted grid used behind a few sections. */
-  .dot-grid {
-    background-image: radial-gradient(rgba(11, 15, 25, 0.08) 1px, transparent 1px);
-    background-size: 22px 22px;
-    -webkit-mask-image: radial-gradient(70% 70% at 50% 40%, #000 30%, transparent 100%);
-    mask-image: radial-gradient(70% 70% at 50% 40%, #000 30%, transparent 100%);
+  .g-periwinkle { background: linear-gradient(160deg, #e8edff 0%, #bccaff 60%, #d0daff 100%); }
+  .g-sky { background: linear-gradient(160deg, #e1f0ff 0%, #aed2ff 65%, #c6e0ff 100%); }
+  .g-indigo { background: linear-gradient(160deg, #d3dafe 0%, #93a6ff 65%, #adbcff 100%); }
+  .g-slate { background: linear-gradient(160deg, #f3f5fa 0%, #cdd3e2 65%, #dde1ec 100%); }
+  .g-blue { background: linear-gradient(160deg, #4a70ff 0%, #0526d9 70%, #2a47ea 100%); }
+  /* Progress bar on the active hero tab. Its end advances the tabs, so with
+     reduced motion (animation off) the tabs simply stay put. */
+  .tab-progress { animation: tab-progress 5s linear forwards; transform: scaleX(0); }
+  @keyframes tab-progress { to { transform: scaleX(1); } }
+  /* Slow drift for the decorative shapes. Purely additive. */
+  .float-a { animation: float-a 9s ease-in-out infinite; }
+  .float-b { animation: float-b 11s ease-in-out infinite; }
+  .float-c { animation: float-a 13s ease-in-out -4s infinite; }
+  @keyframes float-a {
+    0%, 100% { transform: translate3d(0, 0, 0) rotate(var(--r, 0deg)); }
+    50% { transform: translate3d(0, -14px, 0) rotate(calc(var(--r, 0deg) + 3deg)); }
   }
-  /* Thin hairline between stacked sections. */
-  .hairline {
-    border-top: 1px solid var(--line);
+  @keyframes float-b {
+    0%, 100% { transform: translate3d(0, 0, 0) rotate(var(--r, 0deg)); }
+    50% { transform: translate3d(6px, 12px, 0) rotate(calc(var(--r, 0deg) - 4deg)); }
   }
   /* Entrance for the hero only. Content is visible without JS and the
      animation is purely additive. */
@@ -95,37 +117,6 @@
     from { opacity: 0; transform: translateY(14px); }
     to { opacity: 1; transform: none; }
   }
-  /* Range input used by the pricing estimator. */
-  .sl-range {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 100%;
-    height: 6px;
-    border-radius: 9999px;
-    background: var(--line);
-    outline: none;
-    cursor: pointer;
-  }
-  .sl-range::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    height: 22px;
-    width: 22px;
-    border-radius: 9999px;
-    background: #ffffff;
-    border: 1px solid var(--line-strong);
-    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.12), 0 4px 10px -2px rgba(16, 24, 40, 0.22);
-    cursor: pointer;
-  }
-  .sl-range::-moz-range-thumb {
-    height: 22px;
-    width: 22px;
-    border-radius: 9999px;
-    background: #ffffff;
-    border: 1px solid var(--line-strong);
-    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.12), 0 4px 10px -2px rgba(16, 24, 40, 0.22);
-    cursor: pointer;
-  }
   /* Native <details> FAQ: rotate the chevron when open. */
   details.faq > summary { list-style: none; }
   details.faq > summary::-webkit-details-marker { display: none; }
@@ -133,6 +124,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .rise { animation: none !important; }
+  .rise, .float-a, .float-b, .float-c { animation: none !important; }
+  .tab-progress { animation: none !important; transform: scaleX(0); }
+  .tab-progress-track { display: none; }
   html { scroll-behavior: auto; }
 }

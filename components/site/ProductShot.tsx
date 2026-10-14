@@ -1,20 +1,21 @@
 import fs from "node:fs";
 import path from "node:path";
 
-import Image from "next/image";
+import { PanelFrame, ShotPanel, type Tone } from "@/components/home/ShotPanel";
 
 import { Icon } from "./icons";
 
 /**
- * A product screenshot in a browser frame. Screenshots live in public/product
- * and are checked at build time: while one is missing, a neutral UI skeleton
- * with the label renders instead, so pages never ship a broken image.
+ * A product screenshot in a pastel gradient panel. Screenshots live in
+ * public/product and are checked at build time: while one is missing, a neutral
+ * UI skeleton with the label renders in its place, so pages never ship a broken
+ * image.
  */
 export interface Shot {
   /** Path under /public, e.g. "/product/inbox.png". */
   src: string;
   alt: string;
-  /** Short caption used by the placeholder and as the frame's title. */
+  /** Short caption used by the placeholder. */
   label?: string;
 }
 
@@ -28,36 +29,26 @@ function exists(src: string): boolean {
 
 export function ProductShot({
   shot,
+  tone = "periwinkle",
+  side = "right",
   priority = false,
   className = "",
-  frame = true,
   sizes = "(max-width: 1024px) 100vw, 1100px",
 }: {
   shot: Shot;
+  tone?: Tone;
+  side?: "right" | "left";
   priority?: boolean;
   className?: string;
-  frame?: boolean;
   sizes?: string;
 }) {
-  const has = exists(shot.src);
+  if (exists(shot.src)) {
+    return <ShotPanel shot={shot} tone={tone} side={side} cover priority={priority} sizes={sizes} className={className} />;
+  }
   return (
-    <figure className={`overflow-hidden rounded-lg border border-line bg-white shadow-shot ${className}`}>
-      {frame ? (
-        <div className="flex h-9 items-center gap-2 border-b border-line bg-surface px-3.5">
-          <span className="h-2.5 w-2.5 rounded-full bg-[#e3e6ee]" />
-          <span className="h-2.5 w-2.5 rounded-full bg-[#e3e6ee]" />
-          <span className="h-2.5 w-2.5 rounded-full bg-[#e3e6ee]" />
-          <span className="ml-3 flex h-6 flex-1 items-center rounded-md bg-white px-3 text-[11px] text-faint">
-            app.speediq.ai{shot.label ? ` · ${shot.label}` : ""}
-          </span>
-        </div>
-      ) : null}
-      {has ? (
-        <Image src={shot.src} alt={shot.alt} width={1600} height={1000} priority={priority} sizes={sizes} className="block h-auto w-full" />
-      ) : (
-        <Placeholder label={shot.label ?? shot.alt} />
-      )}
-    </figure>
+    <PanelFrame tone={tone} side={side} className={className}>
+      <Placeholder label={shot.label ?? shot.alt} />
+    </PanelFrame>
   );
 }
 
@@ -65,7 +56,7 @@ export function ProductShot({
 function Placeholder({ label }: { label: string }) {
   return (
     <div className="relative aspect-[16/10] w-full bg-white" role="img" aria-label={label}>
-      <div className="absolute inset-0 grid grid-cols-[56px_1fr] sm:grid-cols-[180px_280px_1fr]">
+      <div className="absolute inset-0 grid grid-cols-[44px_1fr] sm:grid-cols-[150px_230px_1fr]">
         <div className="border-r border-line bg-surface p-3">
           <div className="mb-4 h-6 w-6 rounded-md bg-accent-soft-2" />
           {Array.from({ length: 7 }).map((_, i) => (

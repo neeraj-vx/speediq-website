@@ -149,7 +149,7 @@ const sections: LegalSection[] = [
 export default function TermsPage() {
   return (
     <LegalLayout
-      eyebrow="LEGAL"
+      eyebrow="Legal"
       title="Terms of"
       accent="Service."
       subtitle="The terms that govern your use of SpeedIQ. Please read them carefully, they set out your rights and responsibilities as a customer."

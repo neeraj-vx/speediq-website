@@ -1,4 +1,5 @@
 import { pageMeta } from "@/lib/landing/seo";
+import { FAQ, PageHero } from "@/components/site/blocks";
 import { Eyebrow } from "@/components/site/primitives";
 import PricingCalculator, { type CreditTypeOption } from "@/components/landing/PricingCalculator";
 import { formatMoney } from "@/lib/pricing/config";
@@ -71,35 +72,27 @@ export default function PricingPage() {
 
   return (
     <main>
-      <div className="hero-glow w-full">
-        <div className="mx-auto w-full max-w-site px-5 sm:px-8">
-          <div className="max-w-2xl pb-2 pt-14 sm:pt-20">
-            <Eyebrow className="mb-4">Pricing</Eyebrow>
-            <h1 className="font-display text-[38px] font-medium leading-[1.06] tracking-[-0.025em] text-ink sm:text-[52px]">
-              A plan that&apos;s perfect for you.
-            </h1>
-            <p className="mt-5 max-w-xl text-[17px] leading-[1.6] text-body">
-              A fixed monthly plan unlocks your channels and features and includes a pool of credits —
-              no lock-in, cancel anytime, and no per-seat charges; plan member limits apply. All prices
-              are in US dollars.
-            </p>
-          </div>
-        </div>
-      </div>
+      <PageHero
+        eyebrow="Pricing"
+        title="A plan that's perfect for you."
+        lede="A fixed monthly plan unlocks your channels and features and includes a pool of credits. No lock-in, cancel anytime, and no per-seat charges; plan member limits apply. All prices are in US dollars."
+        primary={null}
+        compact
+      />
 
       {/* Fixed tier cards + feature comparison + credit top-up estimator */}
       <PricingCalculator tiers={tiers} creditTypes={creditTypes} />
 
       {/* Credit costs */}
-      <div className="w-full bg-white pb-28">
+      <div className="w-full pb-16 sm:pb-24">
         <div className="mx-auto w-full max-w-site px-5 sm:px-8">
-          <div className="flex w-full flex-col overflow-hidden rounded-md border border-[#d4d9e4] bg-white shadow-sm">
-            <div className="border-b border-[#d4d9e4] px-6 py-12 sm:px-8 lg:p-14">
+          <div className="flex w-full flex-col overflow-hidden rounded-[28px] bg-mist-2 sm:rounded-[34px]">
+            <div className="border-b border-mist-line px-6 py-12 sm:px-8 lg:p-14">
               <Eyebrow>How credits work</Eyebrow>
-              <h2 className="mt-5 max-w-xl font-display text-[32px] font-semibold leading-[1.1] tracking-tight text-[#11161f] sm:text-[36px]">
+              <h2 className="mt-5 max-w-xl font-display text-[32px] font-light leading-[1.1] tracking-[-0.02em] text-ink sm:text-[40px]">
                 One bucket per channel.
               </h2>
-              <p className="mt-4 max-w-[560px] text-[14px] leading-[1.7] text-[#7a808b]">
+              <p className="mt-4 max-w-[560px] text-[14px] leading-[1.7] text-muted">
                 SMS, Voice, Email and AI each have their own credit bucket. An email or an AI action is
                 1 credit. An SMS or voice credit covers one US or Canada SMS segment or call minute;
                 other countries cost more to reach, so a send there uses a few credits. Your plan
@@ -112,19 +105,19 @@ export default function PricingPage() {
               <div className="overflow-x-auto">
                 <table className="w-full min-w-[440px] border-collapse text-left">
                   <thead>
-                    <tr className="border-b border-[#d4d9e4]">
-                      <th className="pb-3 pr-4 text-[12px] font-semibold uppercase tracking-wide text-[#8a8f9b]">
+                    <tr className="border-b border-mist-line">
+                      <th className="pb-3 pr-4 text-[12px] font-semibold uppercase tracking-wide text-muted">
                         Country
                       </th>
-                      <th className="px-4 pb-3 text-[12px] font-semibold uppercase tracking-wide text-[#8a8f9b]">
+                      <th className="px-4 pb-3 text-[12px] font-semibold uppercase tracking-wide text-muted">
                         SMS{" "}
-                        <span className="font-normal normal-case tracking-normal text-[#a1a6b0]">
+                        <span className="font-normal normal-case tracking-normal text-faint">
                           (per segment)
                         </span>
                       </th>
-                      <th className="pl-4 pb-3 text-[12px] font-semibold uppercase tracking-wide text-[#8a8f9b]">
+                      <th className="pl-4 pb-3 text-[12px] font-semibold uppercase tracking-wide text-muted">
                         Voice{" "}
-                        <span className="font-normal normal-case tracking-normal text-[#a1a6b0]">
+                        <span className="font-normal normal-case tracking-normal text-faint">
                           (per minute)
                         </span>
                       </th>
@@ -132,12 +125,12 @@ export default function PricingPage() {
                   </thead>
                   <tbody>
                     {countryRates.map((r) => (
-                      <tr key={r.country} className="border-b border-[#eef0f5] last:border-b-0">
-                        <td className="py-3.5 pr-4 text-[14px] font-medium text-[#11161f]">{countryName(r.country)}</td>
-                        <td className="px-4 py-3.5 text-[15px] font-semibold tracking-tight text-[#11161f]">
+                      <tr key={r.country} className="border-b border-mist-line last:border-b-0">
+                        <td className="py-3.5 pr-4 text-[14px] font-medium text-ink">{countryName(r.country)}</td>
+                        <td className="px-4 py-3.5 text-[15px] font-semibold tracking-tight text-ink">
                           {creditCell(r.sms, smsCents)}
                         </td>
-                        <td className="py-3.5 pl-4 text-[15px] font-semibold tracking-tight text-[#11161f]">
+                        <td className="py-3.5 pl-4 text-[15px] font-semibold tracking-tight text-ink">
                           {creditCell(r.voice, voiceCents)}
                         </td>
                       </tr>
@@ -145,7 +138,7 @@ export default function PricingPage() {
                   </tbody>
                 </table>
               </div>
-              <p className="mt-4 text-[12px] leading-[1.7] text-[#8a8f9b]">
+              <p className="mt-4 text-[12px] leading-[1.7] text-muted">
                 A long SMS is sent in segments (160 characters each, or 70 with emoji or non-Latin
                 text). Calls are billed per started minute. Countries not listed use the highest rate
                 shown.
@@ -153,32 +146,32 @@ export default function PricingPage() {
             </div>
 
             {/* Flat-rate channels (Email, AI) + non-credit social note */}
-            <div className="grid grid-cols-1 border-t border-[#d4d9e4] sm:grid-cols-3">
+            <div className="grid grid-cols-1 border-t border-mist-line sm:grid-cols-3">
               <div className="px-6 py-8 sm:px-8 lg:p-12">
-                <div className="text-[13px] text-[#7a808b]">Email</div>
-                <div className="mt-1 font-display text-[24px] font-semibold tracking-tight text-[#11161f]">
+                <div className="text-[13px] text-muted">Email</div>
+                <div className="mt-1 font-display text-[28px] font-light tracking-[-0.02em] text-ink">
                   {emailCredits} credit{emailCredits === 1 ? "" : "s"}
                 </div>
-                <p className="mt-2 max-w-sm text-[13px] leading-[1.7] text-[#7a808b]">
+                <p className="mt-2 max-w-sm text-[13px] leading-[1.7] text-muted">
                   One email credit per email sent, to any inbox worldwide.
                 </p>
               </div>
-              <div className="border-t border-[#d4d9e4] px-6 py-8 sm:border-l sm:border-t-0 sm:px-8 lg:p-12">
-                <div className="text-[13px] text-[#7a808b]">AI</div>
-                <div className="mt-1 font-display text-[24px] font-semibold tracking-tight text-[#11161f]">
+              <div className="border-t border-mist-line px-6 py-8 sm:border-l sm:border-t-0 sm:px-8 lg:p-12">
+                <div className="text-[13px] text-muted">AI</div>
+                <div className="mt-1 font-display text-[28px] font-light tracking-[-0.02em] text-ink">
                   {aiCredits} credit{aiCredits === 1 ? "" : "s"}
                 </div>
-                <p className="mt-2 max-w-sm text-[13px] leading-[1.7] text-[#7a808b]">
+                <p className="mt-2 max-w-sm text-[13px] leading-[1.7] text-muted">
                   One AI credit per AI action — CRM auto-reply, the WhatsApp AI agent and inbox AI
                   assist. Prospecting &amp; deep research cost 1 AI credit per verified lead.
                 </p>
               </div>
-              <div className="border-t border-[#d4d9e4] px-6 py-8 sm:border-l sm:border-t-0 sm:px-8 lg:p-12">
-                <div className="text-[13px] text-[#7a808b]">WhatsApp &amp; social DMs</div>
-                <div className="mt-1 font-display text-[24px] font-semibold tracking-tight text-[#11161f]">
+              <div className="border-t border-mist-line px-6 py-8 sm:border-l sm:border-t-0 sm:px-8 lg:p-12">
+                <div className="text-[13px] text-muted">WhatsApp &amp; social DMs</div>
+                <div className="mt-1 font-display text-[28px] font-light tracking-[-0.02em] text-ink">
                   0 credits
                 </div>
-                <p className="mt-2 max-w-sm text-[13px] leading-[1.7] text-[#7a808b]">
+                <p className="mt-2 max-w-sm text-[13px] leading-[1.7] text-muted">
                   SpeedIQ does not deduct credits for these sends. Connection, eligibility, and any
                   platform or provider terms remain separate.
                 </p>
@@ -188,25 +181,7 @@ export default function PricingPage() {
         </div>
       </div>
 
-      {/* FAQ */}
-      <div className="w-full bg-white pb-28">
-        <div className="mx-auto w-full max-w-4xl px-6">
-          <div className="">
-            <Eyebrow>FAQ</Eyebrow>
-            <h2 className="mt-5 font-display text-[32px] font-semibold leading-[1.1] tracking-tight text-[#11161f] sm:text-[36px]">
-              Questions, answered.
-            </h2>
-          </div>
-          <div className="mt-8">
-            {faqs.map((f) => (
-              <div key={f.q} className="border-t border-[#e6e9f1] py-7">
-                <h3 className="text-[16px] font-semibold text-[#11161f]">{f.q}</h3>
-                <p className="mt-2 max-w-2xl text-[14px] leading-[1.7] text-[#7a808b]">{f.a}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+      <FAQ items={faqs} title="Questions, answered." />
 
     </main>
   );

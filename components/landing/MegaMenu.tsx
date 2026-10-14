@@ -16,27 +16,26 @@ function MegaLink({
   item: MegaItem;
   onNavigate?: () => void;
 }) {
-  const { name, href, blurb, icon: Icon, color } = item;
+  const { name, href, blurb, icon: Icon } = item;
   return (
     <a
       href={href}
       onClick={onNavigate}
-      className="group/link flex items-start gap-3 rounded-xl p-2.5 transition-colors hover:bg-[#F5F6FB]"
+      className="group/link flex items-start gap-3 rounded-[18px] p-2.5 transition-colors hover:bg-mist-2"
     >
       <span
-        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-[#e3e7f0] bg-white shadow-sm transition-transform group-hover/link:scale-[1.06]"
-        style={{ color }}
+        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-mist text-accent transition-transform group-hover/link:scale-[1.06]"
       >
         <Icon className="h-[17px] w-[17px]" />
       </span>
       <span className="min-w-0">
-        <span className="flex items-center gap-1 text-[13.5px] font-semibold text-[#11161f]">
+        <span className="flex items-center gap-1 text-[14px] font-medium text-ink">
           {name}
-          <span className="text-[#c3c9d4] opacity-0 transition-all group-hover/link:translate-x-0.5 group-hover/link:opacity-100">
+          <span className="text-faint opacity-0 transition-all group-hover/link:translate-x-0.5 group-hover/link:opacity-100">
             ↗
           </span>
         </span>
-        <span className="mt-0.5 block text-[11.5px] leading-[1.45] text-[#7a808b]">
+        <span className="mt-0.5 block text-[12px] leading-[1.45] text-muted">
           {blurb}
         </span>
       </span>
@@ -46,8 +45,8 @@ function MegaLink({
 
 function GroupLabel({ children }: { children: React.ReactNode }) {
   return (
-    <span className="flex items-center gap-2 px-2.5 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#9aa0ac]">
-      <span className="h-1.5 w-1.5 rounded-full bg-[#f47b3f]" />
+    <span className="flex items-center gap-2 px-2.5 text-[13px] font-medium text-muted">
+      <span className="h-1.5 w-1.5 rounded-full bg-accent" />
       {children}
     </span>
   );
@@ -75,7 +74,7 @@ export function FeaturesMenu({ onNavigate }: { onNavigate?: () => void }) {
       <a
         href="/features"
         onClick={onNavigate}
-        className="group/promo relative hidden w-[236px] shrink-0 flex-col justify-between overflow-hidden rounded-2xl p-6 text-white lg:flex bg-[#0526D9]"
+        className="group/promo relative hidden w-[236px] shrink-0 flex-col justify-between overflow-hidden rounded-[22px] p-6 text-white lg:flex g-blue"
        
       >
         <div
@@ -88,7 +87,7 @@ export function FeaturesMenu({ onNavigate }: { onNavigate?: () => void }) {
         />
         <div className="relative">
        
-          <h4 className="mt-4 font-display text-[19px] font-semibold leading-[1.2] tracking-tight text-white">
+          <h4 className="mt-4 font-display text-[22px] font-light leading-[1.2] tracking-[-0.02em] text-white">
             One workspace for every conversation.
           </h4>
           <ul className="mt-4 space-y-2">
@@ -98,14 +97,14 @@ export function FeaturesMenu({ onNavigate }: { onNavigate?: () => void }) {
                   key={t}
                   className="flex items-center gap-2 text-[12px] text-white/80"
                 >
-                  <CheckMini className="h-3.5 w-3.5 shrink-0 text-[#4ade80]" />
+                  <CheckMini className="h-3.5 w-3.5 shrink-0 text-white" />
                   {t}
                 </li>
               ),
             )}
           </ul>
         </div>
-        <span className="relative mt-6 inline-flex items-center gap-2 text-[13px] font-semibold text-white">
+        <span className="relative mt-6 inline-flex items-center gap-2 text-[13.5px] font-medium text-white">
           Explore all features
           <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white text-[#0c1726] transition-transform group-hover/promo:rotate-45">
             <ArrowMini className="h-3 w-3" />
@@ -126,17 +125,17 @@ export function ResourcesMenu({ onNavigate }: { onNavigate?: () => void }) {
           <MegaLink key={item.name} item={item} onNavigate={onNavigate} />
         ))}
       </div>
-      <div className="mt-3 flex items-center justify-between gap-3 border-t border-[#eef0f5] px-2.5 pt-4">
-        <div className="text-[12px] text-[#7a808b]">
+      <div className="mt-3 flex items-center justify-between gap-3 border-t border-mist-line px-2.5 pt-4">
+        <div className="text-[12.5px] text-muted">
           Ready to see it in action?
         </div>
         <a
           href={SIGN_UP_URL}
           onClick={onNavigate}
-          className="group/cta inline-flex items-center gap-2 rounded-full bg-[#15171d] py-1.5 pl-4 pr-1.5 text-[12.5px] font-semibold text-white transition-transform hover:scale-[1.03]"
+          className="group/cta inline-flex items-center gap-2 rounded-full bg-accent py-1.5 pl-4 pr-1.5 text-[13px] font-medium text-white transition-colors hover:bg-accent-ink"
         >
           Start free
-          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white text-[#15171d] transition-transform group-hover/cta:rotate-45">
+          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white text-accent transition-transform group-hover/cta:rotate-45">
             <ArrowMini className="h-3 w-3" />
           </span>
         </a>

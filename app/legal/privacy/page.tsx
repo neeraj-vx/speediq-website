@@ -116,7 +116,7 @@ const sections: LegalSection[] = [
 export default function PrivacyPage() {
   return (
     <LegalLayout
-      eyebrow="LEGAL"
+      eyebrow="Legal"
       title="Privacy"
       accent="Policy."
       subtitle="How we collect, use, and protect personal data across the SpeedIQ platform, and the rights you have over your information."

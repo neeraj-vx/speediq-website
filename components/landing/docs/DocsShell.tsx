@@ -8,7 +8,7 @@ import { DocsSidebar } from "@/components/landing/docs/DocsSidebar";
  */
 export function DocsShell({ children }: { children: ReactNode }) {
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen">
       <div className="mx-auto w-full max-w-site px-5 sm:px-8">
         <div className="flex gap-10 py-10 lg:py-14">
           <aside className="hidden w-56 shrink-0 lg:block">

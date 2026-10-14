@@ -109,7 +109,7 @@ const sections: LegalSection[] = [
 export default function DpaPage() {
   return (
     <LegalLayout
-      eyebrow="LEGAL"
+      eyebrow="Legal"
       title="Data Processing"
       accent="Addendum."
       subtitle="How SpeedIQ processes personal data on your behalf, roles, sub-processors, security measures, and transfer safeguards."

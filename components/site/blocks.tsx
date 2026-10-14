@@ -1,13 +1,21 @@
 import type { ReactNode } from "react";
 
-import { EmailIcon, FacebookIcon, InstagramIcon, SmsIcon, WhatsAppIcon } from "@/components/landing/brand-icons";
-import { PRICING } from "@/lib/pricing/data";
-import { formatMoney } from "@/lib/pricing/config";
+import { ClosingCta, FaqSection } from "@/components/home/sections";
+import { TONE_CYCLE, type Tone } from "@/components/home/ShotPanel";
 import { SIGN_UP_URL } from "@/lib/landing/links";
 
 import { Icon, type IconName } from "./icons";
-import { Button, Checklist, Container, Eyebrow, Heading, Lede, Section, SectionHeader } from "./primitives";
+import { CircleLink } from "./pills";
+import { Button, Checklist, Container, Eyebrow, Heading, Lede } from "./primitives";
 import { ProductShot, type Shot } from "./ProductShot";
+
+/* Building blocks for the inner pages, in the same look as the home page:
+   white page, cool grey cards, big radii, pastel blue panels around
+   screenshots. FAQ and CTA are the home page's own sections, re-exported so the
+   two never drift apart. */
+
+/** The i-th tone in a repeating order, for pages that stack several panels. */
+export const toneAt = (i: number): Tone => TONE_CYCLE[i % TONE_CYCLE.length];
 
 /* ------------------------------------------------------------------ */
 /* Feature grid                                                        */
@@ -24,32 +32,36 @@ export function FeatureGrid({
   items,
   cols = 3,
   className = "",
+  tone = "mist",
 }: {
   items: GridItem[];
   cols?: 2 | 3 | 4;
   className?: string;
+  /** `mist` for cards on the white page, `white` for cards inside a grey surface. */
+  tone?: "mist" | "white";
 }) {
   const colClass = cols === 2 ? "sm:grid-cols-2" : cols === 4 ? "sm:grid-cols-2 lg:grid-cols-4" : "sm:grid-cols-2 lg:grid-cols-3";
+  const bg = tone === "white" ? "bg-white" : "bg-mist-2";
   return (
-    <div className={`grid gap-4 ${colClass} ${className}`}>
+    <div className={`grid gap-3 sm:gap-4 ${colClass} ${className}`}>
       {items.map((item) => {
         const inner = (
           <>
-            <span className="flex h-10 w-10 items-center justify-center rounded-md bg-accent-soft text-accent">
-              <Icon name={item.icon} className="h-5 w-5" />
+            <span className={`flex h-12 w-12 items-center justify-center rounded-full ${tone === "white" ? "bg-mist-2" : "bg-white"} text-accent`}>
+              <Icon name={item.icon} className="h-[22px] w-[22px]" />
             </span>
-            <h3 className="mt-5 text-[17px] font-medium text-ink">{item.title}</h3>
-            <p className="mt-2 text-[14.5px] leading-[1.6] text-body">{item.body}</p>
+            <h3 className="mt-8 font-display text-[22px] font-light leading-[1.2] tracking-[-0.02em] text-ink">{item.title}</h3>
+            <p className="mt-2.5 text-[15px] leading-[1.65] text-body">{item.body}</p>
             {item.href ? (
-              <span className="mt-4 inline-flex items-center gap-1 text-[14px] font-medium text-accent">
+              <span className="mt-5 inline-flex items-center gap-1.5 text-[14.5px] font-medium text-accent">
                 Learn more <Icon name="arrow" className="h-3.5 w-3.5" strokeWidth={2} />
               </span>
             ) : null}
           </>
         );
-        const cls = "flex flex-col rounded-lg border border-line bg-white p-6 transition-colors";
+        const cls = `flex flex-col rounded-[24px] ${bg} p-6 sm:rounded-[28px] sm:p-7 transition-colors`;
         return item.href ? (
-          <a key={item.title} href={item.href} className={`${cls} hover:border-line-strong hover:bg-surface/60`}>
+          <a key={item.title} href={item.href} className={`${cls} hover:bg-mist`}>
             {inner}
           </a>
         ) : (
@@ -63,7 +75,7 @@ export function FeatureGrid({
 }
 
 /* ------------------------------------------------------------------ */
-/* Split feature: text beside a product shot                            */
+/* Split feature: text card with a screenshot panel flush to its edge   */
 /* ------------------------------------------------------------------ */
 
 export function SplitFeature({
@@ -75,6 +87,7 @@ export function SplitFeature({
   shot,
   reverse = false,
   cta,
+  tone = "periwinkle",
   children,
 }: {
   eyebrow?: string;
@@ -85,65 +98,51 @@ export function SplitFeature({
   shot: Shot;
   reverse?: boolean;
   cta?: { label: string; href: string };
+  tone?: Tone;
   children?: ReactNode;
 }) {
   return (
-    <div className={`grid items-center gap-10 lg:grid-cols-12 lg:gap-14 ${reverse ? "" : ""}`}>
-      <div className={`lg:col-span-5 ${reverse ? "lg:order-2" : ""}`}>
-        {eyebrow ? <Eyebrow className="mb-4">{eyebrow}</Eyebrow> : null}
+    <article className={`grid overflow-hidden rounded-[26px] bg-mist sm:rounded-[34px] ${reverse ? "lg:grid-cols-[1.15fr_1fr]" : "lg:grid-cols-[1fr_1.15fr]"}`}>
+      <div className={`flex flex-col px-6 pb-8 pt-8 sm:px-10 sm:pt-10 lg:p-12 ${reverse ? "lg:order-2" : ""}`}>
+        {eyebrow ? <Eyebrow className="mb-3">{eyebrow}</Eyebrow> : null}
         <Heading size="sm" accent={accent} as="h3">
           {title}
         </Heading>
-        <p className="mt-4 text-[16px] leading-[1.65] text-body">{body}</p>
+        <p className="mt-4 max-w-[32rem] text-[15.5px] leading-[1.7] text-body">{body}</p>
         {bullets ? <Checklist items={bullets} className="mt-6" /> : null}
         {children}
         {cta ? (
-          <a href={cta.href} className="mt-6 inline-flex items-center gap-1.5 text-[15px] font-medium text-accent hover:text-accent-ink">
-            {cta.label} <Icon name="arrow" className="h-4 w-4" strokeWidth={2} />
-          </a>
+          <div className="mt-8 lg:mt-auto lg:pt-10">
+            <CircleLink href={cta.href}>{cta.label}</CircleLink>
+          </div>
         ) : null}
       </div>
-      <div className={`lg:col-span-7 ${reverse ? "lg:order-1" : ""}`}>
-        <ProductShot shot={shot} sizes="(max-width: 1024px) 100vw, 700px" />
-      </div>
-    </div>
+      <ProductShot
+        shot={shot}
+        tone={tone}
+        side={reverse ? "left" : "right"}
+        className={`min-h-[300px] sm:min-h-[400px] lg:h-full lg:min-h-[480px] ${
+          reverse ? "rounded-t-[24px] lg:order-1 lg:rounded-r-[32px] lg:rounded-tl-none" : "rounded-t-[24px] lg:rounded-l-[32px] lg:rounded-tr-none"
+        }`}
+        sizes="(max-width: 1024px) 100vw, 760px"
+      />
+    </article>
   );
 }
 
 /* ------------------------------------------------------------------ */
-/* Steps                                                               */
+/* Steps and stats                                                      */
 /* ------------------------------------------------------------------ */
 
-export function Steps({ steps }: { steps: { title: string; body: string; icon: IconName }[] }) {
-  return (
-    <ol className="grid gap-4 md:grid-cols-3">
-      {steps.map((s, i) => (
-        <li key={s.title} className="relative rounded-lg border border-line bg-white p-6">
-          <div className="flex items-center justify-between">
-            <span className="flex h-10 w-10 items-center justify-center rounded-md bg-ink text-white">
-              <Icon name={s.icon} className="h-5 w-5" />
-            </span>
-            <span className="font-display text-[13px] font-medium text-faint">0{i + 1}</span>
-          </div>
-          <h3 className="mt-5 text-[17px] font-medium text-ink">{s.title}</h3>
-          <p className="mt-2 text-[14.5px] leading-[1.6] text-body">{s.body}</p>
-        </li>
-      ))}
-    </ol>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/* Stats strip                                                         */
-/* ------------------------------------------------------------------ */
+export { StepsTray as Steps } from "@/components/home/sections";
 
 export function StatsStrip({ stats }: { stats: { value: string; label: string }[] }) {
   return (
-    <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-line bg-line md:grid-cols-4">
+    <dl className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
       {stats.map((s) => (
-        <div key={s.label} className="bg-white px-6 py-6">
-          <dt className="text-[13px] text-muted">{s.label}</dt>
-          <dd className="mt-1 font-display text-[28px] font-medium tracking-tight text-ink sm:text-[32px]">{s.value}</dd>
+        <div key={s.label} className="rounded-[24px] bg-mist-2 px-6 py-7 sm:rounded-[28px]">
+          <dd className="font-display text-[40px] font-light leading-none tracking-[-0.03em] text-ink sm:text-[48px]">{s.value}</dd>
+          <dt className="mt-3 text-[14px] leading-snug text-body">{s.label}</dt>
         </div>
       ))}
     </dl>
@@ -151,87 +150,12 @@ export function StatsStrip({ stats }: { stats: { value: string; label: string }[
 }
 
 /* ------------------------------------------------------------------ */
-/* Channel strip                                                       */
+/* FAQ and closing call to action (the home page's own sections)         */
 /* ------------------------------------------------------------------ */
 
-const CHANNELS: { name: string; icon: ReactNode; href: string }[] = [
-  { name: "WhatsApp", icon: <WhatsAppIcon className="h-5 w-5" />, href: "/features/whatsapp" },
-  { name: "Instagram", icon: <InstagramIcon className="h-5 w-5" />, href: "/features/social" },
-  { name: "Facebook", icon: <FacebookIcon className="h-5 w-5" />, href: "/features/social" },
-  { name: "Website chat", icon: <Icon name="chat" className="h-5 w-5" />, href: "/features/inbox" },
-  { name: "Email", icon: <EmailIcon className="h-5 w-5" />, href: "/features/email" },
-  { name: "SMS", icon: <SmsIcon className="h-5 w-5" />, href: "/features/sms" },
-  { name: "Voice", icon: <Icon name="phone" className="h-5 w-5" />, href: "/features/voice" },
-  { name: "Google Ads leads", icon: <Icon name="ads" className="h-5 w-5" />, href: "/features/social" },
-  { name: "Forms", icon: <Icon name="form" className="h-5 w-5" />, href: "/features/forms" },
-  { name: "Booking", icon: <Icon name="calendar" className="h-5 w-5" />, href: "/features/booking" },
-];
-
-export function ChannelStrip({ title = "Every channel your customers already use" }: { title?: string }) {
-  return (
-    <div>
-      <p className="text-center text-[13px] font-medium uppercase tracking-[0.14em] text-muted">{title}</p>
-      <ul className="mt-6 flex flex-wrap justify-center gap-2.5">
-        {CHANNELS.map((c) => (
-          <li key={c.name}>
-            <a
-              href={c.href}
-              className="inline-flex items-center gap-2.5 rounded-full border border-line bg-white px-4 py-2 text-[14px] font-medium text-ink transition-colors hover:border-line-strong hover:bg-surface"
-            >
-              <span className="text-body">{c.icon}</span>
-              {c.name}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+export function FAQ({ items, title = "Questions, answered.", lede }: { items: { q: string; a: string }[]; title?: string; eyebrow?: string; lede?: string }) {
+  return <FaqSection items={items} title={title} lede={lede} />;
 }
-
-/* ------------------------------------------------------------------ */
-/* FAQ (native details, no JS)                                         */
-/* ------------------------------------------------------------------ */
-
-export function FAQ({
-  items,
-  title = "Questions, answered.",
-  eyebrow = "FAQ",
-  lede,
-}: {
-  items: { q: string; a: string }[];
-  title?: string;
-  eyebrow?: string;
-  lede?: string;
-}) {
-  return (
-    <Section>
-      <div className="grid gap-10 lg:grid-cols-12">
-        <div className="lg:col-span-4">
-          <SectionHeader eyebrow={eyebrow} title={title} lede={lede} size="sm" />
-        </div>
-        <div className="lg:col-span-8">
-          <div className="divide-y divide-line border-y border-line">
-            {items.map((f) => (
-              <details key={f.q} className="faq group">
-                <summary className="flex cursor-pointer items-start justify-between gap-6 py-5 text-left text-[16px] font-medium text-ink">
-                  {f.q}
-                  <span className="faq-chevron mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-line text-body transition-transform">
-                    <Icon name="plus" className="h-3.5 w-3.5" strokeWidth={2} />
-                  </span>
-                </summary>
-                <p className="pb-6 pr-12 text-[15px] leading-[1.7] text-body">{f.a}</p>
-              </details>
-            ))}
-          </div>
-        </div>
-      </div>
-    </Section>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/* Final CTA                                                           */
-/* ------------------------------------------------------------------ */
 
 export function CTA({
   title = "Bring every conversation into one place.",
@@ -240,91 +164,18 @@ export function CTA({
   title?: string;
   body?: string;
 }) {
-  return (
-    <Section size="sm" className="pb-20 sm:pb-28">
-      <div className="relative overflow-hidden rounded-xl bg-ink px-7 py-14 text-white sm:px-14 sm:py-20">
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{ background: "radial-gradient(60% 80% at 85% 20%, rgba(5,38,217,0.55), transparent 65%), radial-gradient(40% 60% at 10% 100%, rgba(5,38,217,0.35), transparent 60%)" }}
-        />
-        <div className="relative grid items-center gap-8 lg:grid-cols-12">
-          <div className="lg:col-span-8">
-            <h2 className="text-balance font-display text-[32px] font-medium leading-[1.08] text-white sm:text-[44px]">{title}</h2>
-            <p className="mt-4 max-w-xl text-[16px] leading-[1.6] text-white/75 sm:text-[17px]">{body}</p>
-          </div>
-          <div className="flex flex-wrap gap-3 lg:col-span-4 lg:justify-end">
-            <Button href={SIGN_UP_URL} variant="inverse" size="lg" arrow>
-              Get started free
-            </Button>
-            <Button href="/pricing" variant="ghost" size="lg" className="text-white hover:bg-white/10">
-              See pricing
-            </Button>
-          </div>
-        </div>
-      </div>
-    </Section>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/* Pricing teaser                                                      */
-/* ------------------------------------------------------------------ */
-
-const num = (n: number | null) => (n == null ? "" : n.toLocaleString("en-US"));
-
-export function PricingTeaser() {
-  const tiers = PRICING.tiers;
-  return (
-    <Section tone="surface">
-      <SectionHeader
-        eyebrow="Pricing"
-        title="One fixed price per plan."
-        accent="No per-seat fees."
-        lede="Every plan includes monthly credit buckets for email, AI, SMS and voice. Add teammates without paying by the head, within the plan's member limit."
-        align="center"
-      />
-      <div className="mx-auto mt-12 grid max-w-4xl gap-4 md:grid-cols-3">
-        {tiers.map((t) => {
-          const popular = t.id === "pro";
-          const credits = [
-            t.monthly_credits_email ? `${num(t.monthly_credits_email)} email` : null,
-            t.monthly_credits_ai ? `${num(t.monthly_credits_ai)} AI` : null,
-            t.monthly_credits_sms ? `${num(t.monthly_credits_sms)} SMS` : null,
-            t.monthly_credits_voice ? `${num(t.monthly_credits_voice)} voice` : null,
-          ].filter(Boolean);
-          return (
-            <div key={t.id} className={`rounded-lg border bg-white p-6 ${popular ? "border-accent shadow-card" : "border-line"}`}>
-              <div className="flex items-center justify-between">
-                <span className="text-[15px] font-medium text-ink">{t.name}</span>
-                {popular ? <span className="rounded-full bg-accent px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-white">Popular</span> : null}
-              </div>
-              <div className="mt-4 flex items-end gap-1.5">
-                <span className="font-display text-[36px] font-medium leading-none tracking-tight text-ink">
-                  {t.price_usd_monthly != null ? formatMoney(t.price_usd_monthly) : "–"}
-                </span>
-                <span className="pb-1 text-[13px] text-muted">/ mo</span>
-              </div>
-              <p className="mt-3 text-[13px] leading-6 text-body">{credits.join(" · ")} credits included</p>
-              <p className="text-[13px] leading-6 text-muted">
-                {t.max_contacts == null ? "Unlimited" : num(t.max_contacts)} contacts · {t.max_seats == null ? "unlimited" : t.max_seats} members
-              </p>
-            </div>
-          );
-        })}
-      </div>
-      <div className="mt-8 flex justify-center">
-        <Button href="/pricing" variant="secondary" arrow>
-          Compare plans and credit costs
-        </Button>
-      </div>
-    </Section>
-  );
+  return <ClosingCta title={title} body={body} />;
 }
 
 /* ------------------------------------------------------------------ */
 /* Sub-page hero                                                       */
 /* ------------------------------------------------------------------ */
 
+/**
+ * With a screenshot: text on the left, a free-standing gradient panel on the
+ * right. Without one (or `compact`): a centred, text-only hero like the home
+ * page's, which suits the index, legal and comparison pages.
+ */
 export function PageHero({
   eyebrow,
   title,
@@ -332,6 +183,7 @@ export function PageHero({
   lede,
   bullets,
   shot,
+  tone = "periwinkle",
   primary = { label: "Get started free", href: SIGN_UP_URL },
   secondary,
   compact = false,
@@ -342,41 +194,67 @@ export function PageHero({
   lede: string;
   bullets?: string[];
   shot?: Shot;
+  tone?: Tone;
   primary?: { label: string; href: string } | null;
   secondary?: { label: string; href: string };
   compact?: boolean;
 }) {
+  const buttons =
+    primary || secondary ? (
+      <div className={`rise rise-4 mt-8 flex flex-wrap items-center gap-4 ${shot ? "" : "justify-center"}`}>
+        {primary ? (
+          <Button href={primary.href} size="lg">
+            {primary.label}
+          </Button>
+        ) : null}
+        {secondary ? (
+          <Button href={secondary.href} variant="secondary" size="lg">
+            {secondary.label}
+          </Button>
+        ) : null}
+      </div>
+    ) : null;
+
+  if (!shot) {
+    return (
+      <section>
+        <Container className={compact ? "pb-6 pt-12 sm:pb-8 sm:pt-16" : "pb-8 pt-14 sm:pt-20"}>
+          <div className="mx-auto max-w-3xl text-center">
+            <Eyebrow className="rise rise-1">{eyebrow}</Eyebrow>
+            <Heading as="h1" size="lg" accent={accent} className="rise rise-2 mt-4">
+              {title}
+            </Heading>
+            <Lede className="rise rise-3 mx-auto mt-5 max-w-2xl">{lede}</Lede>
+            {bullets ? <Checklist items={bullets} className="rise rise-3 mx-auto mt-6 inline-block text-left" /> : null}
+            {buttons}
+          </div>
+        </Container>
+      </section>
+    );
+  }
+
   return (
-    <section className="hero-glow">
-      <Container className={compact ? "pb-10 pt-14 sm:pb-14 sm:pt-20" : "pb-6 pt-14 sm:pt-20"}>
-        <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
-          <div className={shot ? "lg:col-span-6" : "lg:col-span-8"}>
+    <section>
+      <Container className="pb-6 pt-12 sm:pt-16">
+        <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
+          <div className="lg:col-span-5">
             <Eyebrow className="rise rise-1">{eyebrow}</Eyebrow>
             <Heading as="h1" size="lg" accent={accent} className="rise rise-2 mt-4">
               {title}
             </Heading>
             <Lede className="rise rise-3 mt-5 max-w-xl">{lede}</Lede>
             {bullets ? <Checklist items={bullets} className="rise rise-3 mt-6" /> : null}
-            {primary || secondary ? (
-              <div className="rise rise-4 mt-8 flex flex-wrap gap-3">
-                {primary ? (
-                  <Button href={primary.href} size="lg" arrow>
-                    {primary.label}
-                  </Button>
-                ) : null}
-                {secondary ? (
-                  <Button href={secondary.href} variant="secondary" size="lg">
-                    {secondary.label}
-                  </Button>
-                ) : null}
-              </div>
-            ) : null}
+            {buttons}
           </div>
-          {shot ? (
-            <div className="rise rise-4 lg:col-span-6">
-              <ProductShot shot={shot} priority sizes="(max-width: 1024px) 100vw, 600px" />
-            </div>
-          ) : null}
+          <div className="rise rise-4 lg:col-span-7">
+            <ProductShot
+              shot={shot}
+              tone={tone}
+              priority
+              className="aspect-[16/12] rounded-[26px] sm:rounded-[34px]"
+              sizes="(max-width: 1024px) 100vw, 760px"
+            />
+          </div>
         </div>
       </Container>
     </section>

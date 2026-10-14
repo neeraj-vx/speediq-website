@@ -3,7 +3,7 @@
 
 import { PageHero } from "@/components/site/blocks";
 import { Icon } from "@/components/site/icons";
-import { Container, Eyebrow } from "@/components/site/primitives";
+import { Container } from "@/components/site/primitives";
 
 export type LegalBlock =
   | { type: "p"; text: string }
@@ -71,19 +71,19 @@ export function LegalLayout({
     <main>
       <PageHero eyebrow={eyebrow} title={title} accent={accent} lede={subtitle} primary={null} compact />
 
-      <Container className="py-16">
+      <Container className="py-12 sm:py-16">
         <div className="mx-auto max-w-3xl">
-          <div className="border-b border-line pb-7">
+          <div className="border-b border-mist-line pb-7">
             <span className="text-[13px] font-medium text-muted">Last updated: {updated}</span>
             <p className="mt-3 text-[15px] leading-[1.8] text-body">{intro}</p>
           </div>
 
           <div className="flex flex-col">
             {sections.map((s, i) => (
-              <section key={s.heading} className="border-b border-line py-9 last:border-b-0">
+              <section key={s.heading} className="border-b border-mist-line py-9 last:border-b-0">
                 <div className="flex items-baseline gap-4">
-                  <span className="font-display text-[14px] font-medium text-faint">{String(i + 1).padStart(2, "0")}</span>
-                  <h2 className="font-display text-[22px] font-medium leading-[1.2] text-ink">{s.heading}</h2>
+                  <span className="font-display text-[14px] font-normal text-faint">{String(i + 1).padStart(2, "0")}</span>
+                  <h2 className="font-display text-[24px] font-light leading-[1.2] tracking-[-0.02em] text-ink">{s.heading}</h2>
                 </div>
                 <div className="mt-4 sm:pl-[30px]">
                   <Blocks blocks={s.blocks} />
@@ -93,10 +93,10 @@ export function LegalLayout({
           </div>
 
           <div className="mt-14">
-            <Eyebrow>More policies</Eyebrow>
+            <h2 className="font-display text-[26px] font-light tracking-[-0.02em] text-ink">More policies</h2>
             <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
               {others.map((p) => (
-                <a key={p.href} href={p.href} className="group flex items-center justify-between rounded-md border border-line bg-white px-5 py-4 text-[14.5px] font-medium text-ink transition-colors hover:border-line-strong hover:bg-surface">
+                <a key={p.href} href={p.href} className="group flex items-center justify-between rounded-[20px] bg-mist-2 px-5 py-4 text-[15px] font-medium text-ink transition-colors hover:bg-mist">
                   {p.label}
                   <Icon name="arrow-up-right" className="h-4 w-4 text-faint transition-colors group-hover:text-ink" strokeWidth={2} />
                 </a>

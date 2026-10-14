@@ -112,7 +112,7 @@ const sections: LegalSection[] = [
 export default function AcceptableUsePage() {
   return (
     <LegalLayout
-      eyebrow="LEGAL"
+      eyebrow="Legal"
       title="Acceptable Use"
       accent="Policy."
       subtitle="The rules for using SpeedIQ responsibly, consent, platform rules, AI use, prohibited content, and how we enforce them."

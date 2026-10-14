@@ -36,7 +36,7 @@ export default function WhyUsPage() {
         compact
       />
 
-      <Section>
+      <Section size="sm">
         <FeatureGrid items={[...values]} cols={3} />
       </Section>
 

@@ -75,7 +75,7 @@ const sections: LegalSection[] = [
 export default function RefundPage() {
   return (
     <LegalLayout
-      eyebrow="LEGAL"
+      eyebrow="Legal"
       title="Refund"
       accent="Policy."
       subtitle="When subscription fees and credits are refundable, and how to request a refund."

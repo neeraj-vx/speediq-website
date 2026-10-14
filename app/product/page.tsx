@@ -1,4 +1,5 @@
-import { ChannelStrip, CTA, FAQ, PageHero, SplitFeature, StatsStrip, Steps } from "@/components/site/blocks";
+import { CTA, FAQ, PageHero, SplitFeature, StatsStrip, Steps, toneAt } from "@/components/site/blocks";
+import { ChannelGrid } from "@/components/home/sections";
 import { Section, SectionHeader } from "@/components/site/primitives";
 import { pageMeta } from "@/lib/landing/seo";
 
@@ -27,9 +28,7 @@ export default function ProductPage() {
         compact
       />
 
-      <Section size="sm">
-        <ChannelStrip title="Channels and lead sources" />
-      </Section>
+      <ChannelGrid title="Channels and lead sources" />
 
       <Section size="sm">
         <StatsStrip
@@ -42,9 +41,10 @@ export default function ProductPage() {
         />
       </Section>
 
-      <Section>
-        <div className="space-y-20 sm:space-y-28">
+      <Section size="sm">
+        <div className="space-y-4 sm:space-y-5">
           <SplitFeature
+            tone={toneAt(0)}
             eyebrow="01 · Inbox"
             title="Every channel,"
             accent="one thread."
@@ -54,6 +54,7 @@ export default function ProductPage() {
           />
           <SplitFeature
             reverse
+            tone={toneAt(1)}
             eyebrow="02 · Capture"
             title="Leads from everywhere,"
             accent="routed automatically."
@@ -62,6 +63,7 @@ export default function ProductPage() {
             cta={{ label: "Forms", href: "/features/forms" }}
           />
           <SplitFeature
+            tone={toneAt(2)}
             eyebrow="03 · AI"
             title="An assistant that answers,"
             accent="books and hands off."
@@ -71,6 +73,7 @@ export default function ProductPage() {
           />
           <SplitFeature
             reverse
+            tone={toneAt(3)}
             eyebrow="04 · CRM"
             title="Pipelines, scoring"
             accent="and the whole timeline."
@@ -79,6 +82,7 @@ export default function ProductPage() {
             cta={{ label: "CRM & pipelines", href: "/features/crm" }}
           />
           <SplitFeature
+            tone={toneAt(4)}
             eyebrow="05 · Campaigns"
             title="Broadcasts and sequences"
             accent="on every channel."
@@ -88,6 +92,7 @@ export default function ProductPage() {
           />
           <SplitFeature
             reverse
+            tone={toneAt(5)}
             eyebrow="06 · Reporting"
             title="The numbers,"
             accent="in your currency."
@@ -98,7 +103,7 @@ export default function ProductPage() {
         </div>
       </Section>
 
-      <Section tone="surface">
+      <Section>
         <SectionHeader eyebrow="Getting started" title="Three steps to a working workspace." size="sm" />
         <div className="mt-10">
           <Steps

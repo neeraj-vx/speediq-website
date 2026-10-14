@@ -63,7 +63,7 @@ const sections: LegalSection[] = [
 export default function CookiesPage() {
   return (
     <LegalLayout
-      eyebrow="LEGAL"
+      eyebrow="Legal"
       title="Cookie"
       accent="Policy."
       subtitle="How SpeedIQ uses cookies and similar technologies, the categories we rely on, and how you can manage your consent."

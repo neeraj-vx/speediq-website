@@ -31,22 +31,22 @@ export default async function DocArticlePage({ params }: Ctx) {
   return (
     <DocsShell>
       <article>
-        <p className="text-[12px] font-bold uppercase tracking-wide text-[#9aa1af]">{item.group}</p>
-        <h1 className="mt-3 font-display text-[34px] font-semibold leading-[1.1] tracking-tight text-[#11161f] sm:text-[40px]">
+        <p className="text-[14.5px] font-medium text-accent">{item.group}</p>
+        <h1 className="mt-3 font-display text-[40px] font-light leading-[1.08] tracking-[-0.03em] text-ink sm:text-[52px]">
           {item.title}
         </h1>
         {body}
 
-        <nav className="mt-16 flex flex-col gap-3 border-t border-[#eceef4] pt-8 sm:flex-row sm:justify-between">
+        <nav className="mt-16 flex flex-col gap-3 border-t border-mist-line pt-8 sm:flex-row sm:justify-between">
           {prev ? (
-            <a href={`/docs/${prev.slug}`} className="text-[14px] font-medium text-[#5a6170] transition-colors hover:text-[#11161f]">
+            <a href={`/docs/${prev.slug}`} className="text-[14px] font-medium text-body transition-colors hover:text-ink">
               ← {prev.title}
             </a>
           ) : (
             <span />
           )}
           {next ? (
-            <a href={`/docs/${next.slug}`} className="text-[14px] font-medium text-[#5a6170] transition-colors hover:text-[#11161f]">
+            <a href={`/docs/${next.slug}`} className="text-[14px] font-medium text-body transition-colors hover:text-ink">
               {next.title} →
             </a>
           ) : (
